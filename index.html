@@ -7,21 +7,22 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <header>
+        <button onclick="startCar()">Start Car</button>
+    </header>
+    
     <div class="container">
         <!-- Imagen del carro -->
         <div class="car">
             <img src="carro.png" alt="Carro" class="car-body">
-            <div class="wheel front-wheel"></div>
-            <div class="wheel back-wheel"></div>
             <!-- Video detrás del carro -->
-            <video id="car-video" class="car-video" width="120" height="96" loop muted>
+            <video id="car-video" class="car-video" width="320" height="240" loop muted>
                 <source src="video.mp4" type="video/mp4">
                 Your browser does not support the video tag.
             </video>
         </div>
     </div>
 
-    <button onclick="startCar()">Start Car</button>
     <script src="script.js"></script>
 </body>
 </html>

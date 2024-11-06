@@ -212,16 +212,30 @@
 
 	//TREMBLING
 	
-	p.tril = function(a) 
-	{
-		if (this.road.y>this.road.yOrig) this.road.y = this.road.yOrig - a;
-		else this.road.y = this.road.yOrig + a;
-	}
-	p.trilHor = function(a) 
-	{
-		if (this.road.x>this.road.xOrig) this.road.x = this.road.xOrig - a;
-		else this.road.x = this.road.xOrig + a;
-	}
+	p.tril = function(a) {
+    if (this.speed > 0.1) { // Solo temblar si la velocidad es mayor a 0.1
+        if (this.road.y > this.road.yOrig) {
+            this.road.y = this.road.yOrig - a * 0.5;
+        } else {
+            this.road.y = this.road.yOrig + a * 0.5;
+        }
+    } else {
+        this.road.y = this.road.yOrig; // Asegura que se mantenga en posición cuando esté en reposo
+    }
+};
+
+p.trilHor = function(a) {
+    if (this.speed > 0.1) { // Solo temblar si la velocidad es mayor a 0.1
+        if (this.road.x > this.road.xOrig) {
+            this.road.x = this.road.xOrig - a * 0.5;
+        } else {
+            this.road.x = this.road.xOrig + a * 0.5;
+        }
+    } else {
+        this.road.x = this.road.xOrig; // Asegura que se mantenga en posición cuando esté en reposo
+    }
+};
+
 
 	//STARS
 	

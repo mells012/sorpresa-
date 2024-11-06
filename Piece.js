@@ -179,14 +179,14 @@
     this.curve = Math.max(-1, Math.min(1, this.curve));
 
     // Envía el `movieclip` de la carretera al cuadro correcto
-    var fr = Math.round(0.5 * (this.curve + 1) * (this.totalframes - 1));
+    var fr = Math.round(0.5 * (this.curve + 1) * (this.totalframes - 0));
     this.road.gotoAndStop(fr);
 
     // Accede al elemento del auto en el DOM
     var carImage = document.getElementById('carImage');
     if (carImage) {
         // Ajusta el ángulo de rotación del auto basado en `dir`
-        var angle = dir * 1; // Ajusta este valor para controlar la inclinación
+        var angle = dir * 0.5; // Ajusta este valor para controlar la inclinación
         carImage.style.transform = `translate(-50%, -50%) rotate(${angle}deg)`;
     }
 };
@@ -209,13 +209,13 @@
 	
 	p.tril = function(a) 
 	{
-		if (this.road.y>this.road.yOrig) this.road.y = this.road.yOrig - a*0.5;
-		else this.road.y = this.road.yOrig + a*0.5;
+		if (this.road.y>this.road.yOrig) this.road.y = this.road.yOrig - a;
+		else this.road.y = this.road.yOrig + a;
 	}
 	p.trilHor = function(a) 
 	{
-		if (this.road.x>this.road.xOrig) this.road.x = this.road.xOrig - a*0.5;
-		else this.road.x = this.road.xOrig + a*0.5;
+		if (this.road.x>this.road.xOrig) this.road.x = this.road.xOrig - a;
+		else this.road.x = this.road.xOrig + a;
 	}
 
 	//STARS

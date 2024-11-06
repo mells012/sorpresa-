@@ -51,6 +51,8 @@ p.onKeyUp = function(e) {
     if (c == "R") this.reset();
     else if (c == "C") this.colorOvals = this.colorOvals == "#000" ? "#00F" : "#000";
 };
+		
+	
 	/*********************************
 	 *		    INTERACTION
 	 ********************************/
@@ -347,10 +349,3 @@ p.trilHor = function(a) {
 	
 
 }(window));
-
-
-    // Comandos de depuración adicionales
-    var c = String.fromCharCode(e.which);
-    if (c == "R") this.reset();
-    else if (c == "C") this.colorOvals = this.colorOvals == "#000" ? "#00F" : "#000";
-};

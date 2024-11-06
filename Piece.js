@@ -179,14 +179,14 @@
     this.curve = Math.max(-1, Math.min(1, this.curve));
 
     // Envía el `movieclip` de la carretera al cuadro correcto
-    var fr = Math.round(0.5 * (this.curve + 1) * (this.totalframes - 1));
+    var fr = Math.round(0.2 * (this.curve + 1) * (this.totalframes - 1));
     this.road.gotoAndStop(fr);
 
     // Accede al elemento del auto en el DOM
     var carImage = document.getElementById('carImage');
     if (carImage) {
         // Ajusta el ángulo de rotación del auto basado en `dir`
-        var angle = dir * 10; // Ajusta este valor para controlar la inclinación
+        var angle = dir * 4; // Ajusta este valor para controlar la inclinación
         carImage.style.transform = `translate(-50%, -50%) rotate(${angle}deg)`;
     }
 };

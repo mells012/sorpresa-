@@ -1,3 +1,4 @@
+//Controladores
 (function(window) {
 	var Piece = function(canvas, config)
 	{

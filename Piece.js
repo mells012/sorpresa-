@@ -191,7 +191,7 @@
     var carImage = document.getElementById('carImage');
     if (carImage) {
         // Ajusta el ángulo de rotación del auto basado en `dir`
-        var angle = dir * 0.99; // Ajusta este valor para controlar la inclinación
+        var angle = dir * 1.02; // Ajusta este valor para controlar la inclinación
         carImage.style.transform = `translate(-50%, -50%) rotate(${angle}deg)`;
     }
 };

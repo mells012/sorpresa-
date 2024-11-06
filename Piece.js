@@ -1,4 +1,3 @@
-
 (function(window) {
 	var Piece = function(canvas, config)
 	{
@@ -11,24 +10,23 @@
 	//
 	p.initialize = function(canvas, config)
 	{
+		BasePiece.prototype.initialize.call(this, canvas, config);
+		this.initInteraction();
+		window.onkeydown = this.onKeyDown.bind(this);
+	}
 
-
+	p.onKeyDown = function(e)
+	{
+		var keycode = e.which;
+		//left right
+		if (keycode == 37) this.turndir = -1; 
+		if (keycode == 39) this.turndir = 1;
+		//up down
+		if (keycode == 38) this.acceleration = 1;
 		if (keycode == 40) this.acceleration = -1;
 	}
-	
-	p.onKeyUp = function(e)
-	{
-		BasePiece.prototype.onKeyUp.call(this, e);
-		var keycode = e.which;
-		if (keycode == 37 || keycode == 39) this.turndir = 0;
-		if (keycode == 38 || keycode == 40) this.acceleration = 0;
-		//
-		if (!this.config.debug) return;
-		var c = String.fromCharCode(e.which);
-		if (c=="R") this.reset();
-		else if (c=="C") this.colorOvals = this.colorOvals == "#000" ? "#00F" : "#000";
-	}
-	// Modifica la función `onKeyUp` para controlar la reproducción del audio
+
+// Modifica la función `onKeyUp` para controlar la reproducción del audio
 p.onKeyUp = function(e) {
     BasePiece.prototype.onKeyUp.call(this, e);
     var keycode = e.which;
@@ -53,8 +51,6 @@ p.onKeyUp = function(e) {
     if (c == "R") this.reset();
     else if (c == "C") this.colorOvals = this.colorOvals == "#000" ? "#00F" : "#000";
 };
-		
-	
 	/*********************************
 	 *		    INTERACTION
 	 ********************************/
@@ -351,3 +347,10 @@ p.trilHor = function(a) {
 	
 
 }(window));
+
+
+    // Comandos de depuración adicionales
+    var c = String.fromCharCode(e.which);
+    if (c == "R") this.reset();
+    else if (c == "C") this.colorOvals = this.colorOvals == "#000" ? "#00F" : "#000";
+};

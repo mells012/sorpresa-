@@ -209,13 +209,13 @@
 	
 	p.tril = function(a) 
 	{
-		if (this.road.y>this.road.yOrig) this.road.y = this.road.yOrig - a;
-		else this.road.y = this.road.yOrig + a;
+		if (this.road.y>this.road.yOrig) this.road.y = this.road.yOrig - a*0.5;
+		else this.road.y = this.road.yOrig + a*0.5;
 	}
 	p.trilHor = function(a) 
 	{
-		if (this.road.x>this.road.xOrig) this.road.x = this.road.xOrig - a;
-		else this.road.x = this.road.xOrig + a;
+		if (this.road.x>this.road.xOrig) this.road.x = this.road.xOrig - a*0.5;
+		else this.road.x = this.road.xOrig + a*0.5;
 	}
 
 	//STARS

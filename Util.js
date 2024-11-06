@@ -1,3 +1,4 @@
+//dibujar estrellas
 var RandomUtil = {};
 RandomUtil.pick = function(pool, exceptions)
 {

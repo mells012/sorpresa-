@@ -110,6 +110,11 @@
 	p.reset = function()
 	{
 		var cfg = this.config, w = this.width, h = this.height, w2 = w/2, h2 = h/2;
+		
+    cfg.ampl = 0; // Desactiva el temblor vertical al inicio
+    cfg.amplHor = 0; // Desactiva el temblor horizontal al inicio
+    cfg.tril_hor_freq = 20; // Ajusta la frecuencia de temblor a un valor más alto
+    
     this.road.gotoAndStop(this.midframe);		
 		this.acceleration = 0;
 		this.turndir = 0;
@@ -186,7 +191,7 @@
     var carImage = document.getElementById('carImage');
     if (carImage) {
         // Ajusta el ángulo de rotación del auto basado en `dir`
-        var angle = dir * 0.8; // Ajusta este valor para controlar la inclinación
+        var angle = dir * 0.99; // Ajusta este valor para controlar la inclinación
         carImage.style.transform = `translate(-50%, -50%) rotate(${angle}deg)`;
     }
 };

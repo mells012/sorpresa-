@@ -188,12 +188,22 @@
     this.road.gotoAndStop(fr);
 
     // Accede al elemento del auto en el DOM
-    var carImage = document.getElementById('carImage');
+var carImage = document.getElementById('carImage');
+var currentAngle = 0; // Define el ángulo actual fuera de la función para mantener el estado
+
+function updateCarRotation(dir) {
     if (carImage) {
-        // Ajusta el ángulo de rotación del auto basado en `dir`
-        var angle = dir * 1.02; // Ajusta este valor para controlar la inclinación
-        carImage.style.transform = `translate(-50%, -50%) rotate(${angle}deg)`;
+        // Calcula el ángulo objetivo basado en `dir`
+        var targetAngle = dir * 1.5; // Ajusta el valor `15` para controlar la inclinación máxima
+
+        // Gradualmente ajusta el `currentAngle` hacia el `targetAngle`
+        currentAngle += (targetAngle - currentAngle) * 0.4; // Ajusta `0.1` para la velocidad de suavizado
+
+        // Aplica la transformación al elemento del auto
+        carImage.style.transform = `translate(-50%, -50%) rotate(${currentAngle}deg)`;
     }
+}
+
 };
 
 

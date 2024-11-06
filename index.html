@@ -48,10 +48,26 @@
       pointer-events: none;
       transition: transform 0.1s;
     }
+
+    /* Estilos para las líneas de texto secuenciales */
+    .text-sequence {
+      position: absolute;
+      top: 20%;
+      left: 50%;
+      transform: translateX(-50%);
+      color: white;
+      text-align: center;
+      font-size: 1.5em;
+      z-index: 4;
+    }
+
+    .text-line {
+      display: none; /* Oculta todas las líneas inicialmente */
+    }
   </style>
 </head>
 
-<body onload="init('myCanvas', Piece, Config); ">
+<body onload="init('myCanvas', Piece, Config); startTextSequence();">
 
   <!-- Canvas para animaciones -->
   <canvas id="myCanvas" width="300" height="1530"></canvas>
@@ -61,6 +77,51 @@
 
   <!-- Div para mostrar información adicional -->
   <div id="output">.</div>
-  
+
+  <!-- Contenedor para la secuencia de líneas de texto -->
+  <div class="text-sequence" id="textSequence">
+    <div class="text-line">Línea de texto 1</div>
+    <div class="text-line">Línea de texto 2</div>
+    <div class="text-line">Línea de texto 3</div>
+    <div class="text-line">Línea de texto 4</div>
+    <!-- Añade más líneas si es necesario -->
+  </div>
+
+  <!-- Script para controlar la secuencia de texto -->
+  <script>
+    const duration = 2000; // Duración de aparición de cada línea (en milisegundos)
+    let currentIndex = 0;
+    let timer;
+    let isActive = true;
+
+    const textLines = document.querySelectorAll('.text-line');
+    const totalLines = textLines.length;
+
+    // Función para mostrar la siguiente línea de texto
+    function showNextLine() {
+      if (!isActive) return;
+
+      textLines[currentIndex].style.display = 'none'; // Oculta la línea actual
+      currentIndex = (currentIndex + 1) % totalLines; // Avanza al siguiente índice
+      textLines[currentIndex].style.display = 'block'; // Muestra la nueva línea
+    }
+
+    // Inicia la secuencia de aparición de texto
+    function startTextSequence() {
+      timer = setInterval(showNextLine, duration);
+    }
+
+    // Pausa la secuencia cuando no hay actividad
+    function resetActivityTimer() {
+      isActive = true;
+      clearTimeout(activityTimeout);
+      activityTimeout = setTimeout(() => isActive = false, 5000);
+    }
+
+    let activityTimeout = setTimeout(() => isActive = false, 5000);
+    window.addEventListener('mousemove', resetActivityTimer);
+    window.addEventListener('keydown', resetActivityTimer);
+    window.addEventListener('click', resetActivityTimer);
+  </script>
 </body>
 </html>

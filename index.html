@@ -14,6 +14,20 @@
   <script type="text/javascript" src="Config.js"></script>
   <script type="text/javascript" src="Piece.js"></script>
 
+  <script>
+        var canvas = document.getElementById('myCanvas');
+        var ctx = canvas.getContext('2d');
+        var astonImg = new Image();
+        astonImg.src = 'Aston_Martin_Valkyrie.png';
+        astonImg.onload = function() {
+            var ancho = canvas.width * 0.25;
+            var alto = canvas.height * 0.25;
+            var posicionX = (canvas.width - ancho) / 2;
+            var posicionY = (canvas.height - alto) / 2;
+            ctx.drawImage(astonImg, posicionX, posicionY, ancho, alto);
+        };
+    </script>
+
   <!-- Estilos -->
   <style> 
     body { 
@@ -39,10 +53,10 @@
     }
 
     <!-- Canvas para animaciones -->
-<canvas id="myCanvas" width="300" height="1530"></canvas>
+    <canvas id="myCanvas" width="300" height="1530"></canvas>
 
-<!-- Imagen del auto -->
-<img id="carImage" src="Aston_Martin_Valkyrie.png" alt="Aston Martin Valkyrie" />
+    <!-- Imagen del auto -->
+    <img id="carImage" src="Aston_Martin_Valkyrie.png" alt="Aston Martin Valkyrie" />
 
     #carImage {
   position: absolute; /* Sobreponer en la página */
@@ -52,7 +66,7 @@
   transform: translate(-50%, -50%); /* Centrará la imagen en el punto especificado */
   width: 100px; /* Ajusta el tamaño de la imagen según tu preferencia */
   pointer-events: none; /* Para que no interfiera con los eventos del canvas */
-}
+    }
 
     
   </style>

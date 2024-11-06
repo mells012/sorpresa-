@@ -179,7 +179,7 @@
     this.curve = Math.max(-1, Math.min(1, this.curve));
 
     // Envía el `movieclip` de la carretera al cuadro correcto
-    var fr = Math.round(0.2 * (this.curve + 1) * (this.totalframes - 1));
+    var fr = Math.round(0.5 * (this.curve + 1) * (this.totalframes - 1));
     this.road.gotoAndStop(fr);
 
     // Accede al elemento del auto en el DOM

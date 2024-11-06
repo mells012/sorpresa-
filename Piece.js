@@ -147,10 +147,10 @@
 		//
 		this.accelerate(this.acceleration);
 		this.turn(this.turndir);
-		this.tril(cfg.ampl * this.speed);
+		this.tril(cfg.ampl = 1);
 		this.counter ++;
-		if (this.counter % cfg.tril_hor_freq==0) {
-			this.trilHor(cfg.amplHor * this.speed);
+		if (this.counter % cfg.tril_hor_freq==10) {
+			this.trilHor(cfg.amplHor =0.5);
 		} else {
 			this.road.x = this.road.xOrig;
 		}

@@ -163,22 +163,34 @@
 	// DRIVING
 
 	p.turn = function(dir) 
-	{
-		var cfg = this.config;
-		if (dir == 0) 
-		{
-			// move back to middle of road
-			var sgn = MathUtil.sgn(this.curve);
-			if (Math.abs(this.curve)<.5) dir = .5 * this.speed * sgn;
-			else dir = cfg.speed_back_to_middle * this.speed * sgn;
-		}
-		//calculate new curve
-		this.curve -= this.speed * dir * this.curvestep;
-		this.curve = Math.max(-1, Math.min(1, this.curve));
-		//send road mc to right frame
-		var fr = Math.round(.5*(this.curve+1) * (this.totalframes-1));
-		this.road.gotoAndStop(fr);
-	}
+{
+    var cfg = this.config;
+
+    // Si dir es 0, mueve de vuelta al centro de la carretera
+    if (dir == 0) 
+    {
+        var sgn = MathUtil.sgn(this.curve);
+        if (Math.abs(this.curve) < 0.5) dir = 0.5 * this.speed * sgn;
+        else dir = cfg.speed_back_to_middle * this.speed * sgn;
+    }
+
+    // Calcula la nueva curva
+    this.curve -= this.speed * dir * this.curvestep;
+    this.curve = Math.max(-1, Math.min(1, this.curve));
+
+    // Envía el `movieclip` de la carretera al cuadro correcto
+    var fr = Math.round(0.5 * (this.curve + 1) * (this.totalframes - 1));
+    this.road.gotoAndStop(fr);
+
+    // Accede al elemento del auto en el DOM
+    var carImage = document.getElementById('carImage');
+    if (carImage) {
+        // Ajusta el ángulo de rotación del auto basado en `dir`
+        var angle = dir * 10; // Ajusta este valor para controlar la inclinación
+        carImage.style.transform = `translate(-50%, -50%) rotate(${angle}deg)`;
+    }
+};
+
 
 	p.accelerate = function(dir) 
 	{

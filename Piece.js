@@ -27,10 +27,10 @@
 var audio = new Audio('Packing It Up.mp3');
 audio.onload = function() {
     console.log('Audio cargado correctamente');
-};
+}
 audio.onerror = function() {
     console.log('Error al cargar el audio');
-};
+}
 
 // Modifica la función `onKeyUp` para controlar la reproducción del audio
 p.onKeyUp = function(e) {
@@ -58,7 +58,7 @@ p.onKeyUp = function(e) {
     var c = String.fromCharCode(e.which);
     if (c == "R") this.reset();
     else if (c == "C") this.colorOvals = this.colorOvals == "#000" ? "#00F" : "#000";
-};
+}
 
 		
 	
@@ -226,7 +226,7 @@ function updateCarRotation(dir) {
     }
 }
 
-};
+}
 
 
 	p.accelerate = function(dir) 
@@ -254,7 +254,7 @@ function updateCarRotation(dir) {
     } else {
         this.road.y = this.road.yOrig; // Asegura que se mantenga en posición cuando esté en reposo
     }
-};
+}
 
 p.trilHor = function(a) {
     if (this.speed > 0.1) { // Solo temblar si la velocidad es mayor a 0.1
@@ -266,7 +266,7 @@ p.trilHor = function(a) {
     } else {
         this.road.x = this.road.xOrig; // Asegura que se mantenga en posición cuando esté en reposo
     }
-};
+}
 
 
 	//STARS

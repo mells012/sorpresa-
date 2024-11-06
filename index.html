@@ -60,51 +60,6 @@
 
   <!-- Div para mostrar información adicional -->
   <div id="output">ya funciona? siiiiiiiii</div>
-
-  <script>
-    // Inicia la animación y sincroniza la rotación del auto
-    function startAnimation() {
-        var canvas = document.getElementById('myCanvas');
-        var ctx = canvas.getContext('2d');
-        var astonImg = document.getElementById('carImage'); // Usa la imagen del auto
-
-        function animate() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-            if (typeof animateBackground === 'function') {
-                animateBackground(ctx);
-            }
-
-            requestAnimationFrame(animate);
-        }
-
-        // Función para girar el auto en función de la dirección
-        function turnCar(dir) {
-            var angle = dir * 10; // Ajusta el factor multiplicativo para controlar la inclinación
-            astonImg.style.transform = `translate(-50%, -50%) rotate(${angle}deg)`;
-        }
-
-        // Modificación de la función de curva (ejemplo)
-        p.turn = function(dir) {
-            var cfg = this.config;
-            if (dir == 0) {
-                // Mueve de regreso al centro de la carretera
-                var sgn = MathUtil.sgn(this.curve);
-                if (Math.abs(this.curve) < 0.5) dir = 0.5 * this.speed * sgn;
-                else dir = cfg.speed_back_to_middle * this.speed * sgn;
-            }
-            // Llama a la función para girar el auto
-            turnCar(dir);
-        };
-
-        animate();
-    }
-
-    // Llama a la función de animación al cargar la imagen del auto
-    window.onload = function() {
-      startAnimation();
-    };
-  </script>
   
 </body>
 </html>

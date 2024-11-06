@@ -58,38 +58,6 @@
 
   <!-- Div para mostrar información adicional -->
   <div id="output">ya funciona? siiiiiiiii</div>
-
-  <script>
-    function startAnimation() {
-      var canvas = document.getElementById('myCanvas');
-      var ctx = canvas.getContext('2d');
-      var astonImg = new Image();
-      astonImg.src = 'Aston_Martin_Valkyrie.png';
-
-      // Función de animación para dibujar fondo y auto
-      function animate() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-        // Llama a la función de `libs.min.js` para animar el fondo
-        if (typeof animateBackground === 'function') {
-          animateBackground(ctx);
-        }
-
-        // Dibuja el auto centrado
-        var ancho = canvas.width * 0.25;
-        var alto = canvas.height * 0.25;
-        var posicionX = (canvas.width - ancho) / 2;
-        var posicionY = (canvas.height - alto) / 2;
-        ctx.drawImage(astonImg, posicionX, posicionY, ancho, alto);
-
-        requestAnimationFrame(animate);
-      }
-
-      // Inicia la animación cuando la imagen esté cargada
-      astonImg.onload = function() {
-        animate();
-      };
-    }
-  </script>
+  
 </body>
 </html>

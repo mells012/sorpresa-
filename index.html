@@ -7,11 +7,29 @@
   <title>Canvas Animation</title>
   
   <!-- Scripts externos -->
-  <script type="text/javascript" src="libs.min.js"></script>
+
+  
   <script type="text/javascript" src="assets.js"></script>
   <script type="text/javascript" src="Util.js"></script>
   <script type="text/javascript" src="Config.js"></script>
   <script type="text/javascript" src="Piece.js"></script>
+  
+
+  <script>
+        var canvas = document.getElementById('myCanvas');
+        var ctx = canvas.getContext('2d');
+        var astonImg = new Image();
+        astonImg.src = 'Aston_Martin_Valkyrie.png';
+        astonImg.onload = function() {
+            var ancho = canvas.width * 0.25;
+            var alto = canvas.height * 0.25;
+            var posicionX = (canvas.width - ancho) / 2;
+            var posicionY = (canvas.height - alto) / 2;
+            ctx.drawImage(astonImg, posicionX, posicionY, ancho, alto);
+        };
+    </script>
+
+  <script type="text/javascript" src="libs.min.js"></script>
 
   <!-- Estilos -->
   <style> 
@@ -36,44 +54,31 @@
       top: 10px;
       font-size: 10px;
     }
+
+    <!-- Canvas para animaciones -->
+    <canvas id="myCanvas" width="300" height="1530"></canvas>
+
+    <!-- Imagen del auto -->
+    <img id="carImage" src="Aston_Martin_Valkyrie.png" alt="Aston Martin Valkyrie" />
+
+    #carImage {
+  position: absolute; /* Sobreponer en la página */
+  z-index: 3; /* Asegúrate de que esté encima del canvas */
+  top: 50%; /* Cambia la posición según donde la necesites */
+  left: 50%; /* Cambia la posición según donde la necesites */
+  transform: translate(-50%, -50%); /* Centrará la imagen en el punto especificado */
+  width: 100px; /* Ajusta el tamaño de la imagen según tu preferencia */
+  pointer-events: none; /* Para que no interfiera con los eventos del canvas */
+    }
+
+    
   </style>
 </head>
-
-<body onload="startAnimation()">
+<body onload="init('myCanvas', Piece, Config);">
   <!-- Canvas para animaciones -->
   <canvas id="myCanvas" width="300" height="1530"></canvas>
 
-  <script>
-    function startAnimation() {
-      var canvas = document.getElementById('myCanvas');
-      var ctx = canvas.getContext('2d');
-      var astonImg = new Image();
-      astonImg.src = 'Aston_Martin_Valkyrie.png';
-
-      // Función de animación
-      function animate() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height); // Limpia el canvas
-
-        // Llama a la función de `libs.min.js` para dibujar la animación de fondo, si existe
-        if (typeof animateBackground === 'function') {
-          animateBackground(ctx);
-        }
-
-        // Dibuja la imagen del auto centrada en el canvas
-        var ancho = canvas.width * 0.25;
-        var alto = canvas.height * 0.25;
-        var posicionX = (canvas.width - ancho) / 2;
-        var posicionY = (canvas.height - alto) / 2;
-        ctx.drawImage(astonImg, posicionX, posicionY, ancho, alto);
-
-        requestAnimationFrame(animate); // Llama al siguiente cuadro
-      }
-
-      // Inicia la animación
-      astonImg.onload = function() {
-        animate();
-      };
-    }
-  </script>
+  <!-- Div para mostrar información adicional -->
+  <div id="output">ya funciona? siiiiiiiii</div>
 </body>
 </html>

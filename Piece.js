@@ -4,6 +4,9 @@
 		this.initialize(canvas, config);
 	}
 	var p = Piece.prototype = new BasePiece();
+	
+	// Crear un objeto de audio para el archivo "Packing It Up.mp3"
+		var audio = new Audio('Packing It Up.mp3');
 	//
 	p.initialize = function(canvas, config)
 	{
@@ -23,18 +26,31 @@
 		if (keycode == 40) this.acceleration = -1;
 	}
 	
-	p.onKeyUp = function(e)
-	{
-		BasePiece.prototype.onKeyUp.call(this, e);
-		var keycode = e.which;
-		if (keycode == 37 || keycode == 39) this.turndir = 0;
-		if (keycode == 38 || keycode == 40) this.acceleration = 0;
-		//
-		if (!this.config.debug) return;
-		var c = String.fromCharCode(e.which);
-		if (c=="R") this.reset();
-		else if (c=="C") this.colorOvals = this.colorOvals == "#000" ? "#00F" : "#000";
-	}
+	// Modifica la función `onKeyUp` para controlar la reproducción del audio
+p.onKeyUp = function(e) {
+    BasePiece.prototype.onKeyUp.call(this, e);
+    var keycode = e.which;
+    if (keycode == 37 || keycode == 39) this.turndir = 0;
+    if (keycode == 38 || keycode == 40) this.acceleration = 0;
+
+    // Comando para controlar el audio según `this.config.debug`
+    if (this.config.debug) {
+        // Si `debug` es true, reproduce el audio
+        if (audio.paused) {
+            audio.play();
+        }
+    } else {
+        // Si `debug` es false, pausa el audio
+        if (!audio.paused) {
+            audio.pause();
+        }
+    }
+
+    // Comandos de depuración adicionales
+    var c = String.fromCharCode(e.which);
+    if (c == "R") this.reset();
+    else if (c == "C") this.colorOvals = this.colorOvals == "#000" ? "#00F" : "#000";
+};
 		
 	
 	/*********************************

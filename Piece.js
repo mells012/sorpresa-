@@ -207,10 +207,10 @@ var currentAngle = 0; // Define el ángulo actual fuera de la función para mant
 function updateCarRotation(dir) {
     if (carImage) {
         // Calcula el ángulo objetivo basado en `dir`
-        var targetAngle = dir * 10; // Ajusta el valor `15` para controlar la inclinación máxima
+        var targetAngle = dir * 0.5; // Ajusta el valor `15` para controlar la inclinación máxima
 
         // Gradualmente ajusta el `currentAngle` hacia el `targetAngle`
-        currentAngle += (targetAngle - currentAngle) * 0.3; // Ajusta `0.1` para la velocidad de suavizado
+        currentAngle += (targetAngle - currentAngle) * 0.1; // Ajusta `0.1` para la velocidad de suavizado
 
         // Aplica la transformación al elemento del auto
         carImage.style.transform = `translate(-50%, -50%) rotate(${currentAngle}deg)`;

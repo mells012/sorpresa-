@@ -5,9 +5,6 @@
 	}
 	var p = Piece.prototype = new BasePiece();
 	
-	// Crear un objeto de audio para el archivo "Packing It Up.mp3"
-		var audio = new Audio('Packing It Up.mp3');
-	
 	p.initialize = function(canvas, config)
 	{
 		BasePiece.prototype.initialize.call(this, canvas, config);
@@ -25,8 +22,17 @@
 		if (keycode == 38) this.acceleration = 1;
 		if (keycode == 40) this.acceleration = -1;
 	}
-	
-	// Modifica la función `onKeyUp` para controlar la reproducción del audio
+
+	// Crear un objeto de audio para el archivo "Packing It Up.mp3"
+var audio = new Audio('Packing It Up.mp3');
+audio.onload = function() {
+    console.log('Audio cargado correctamente');
+};
+audio.onerror = function() {
+    console.log('Error al cargar el audio');
+};
+
+// Modifica la función `onKeyUp` para controlar la reproducción del audio
 p.onKeyUp = function(e) {
     BasePiece.prototype.onKeyUp.call(this, e);
     var keycode = e.which;
@@ -37,11 +43,13 @@ p.onKeyUp = function(e) {
     if (this.config.debug) {
         // Si `debug` es true, reproduce el audio
         if (audio.paused) {
+            console.log('Reproduciendo audio');
             audio.play();
         }
     } else {
         // Si `debug` es false, pausa el audio
         if (!audio.paused) {
+            console.log('Pausando audio');
             audio.pause();
         }
     }
@@ -51,6 +59,7 @@ p.onKeyUp = function(e) {
     if (c == "R") this.reset();
     else if (c == "C") this.colorOvals = this.colorOvals == "#000" ? "#00F" : "#000";
 };
+
 		
 	
 	/*********************************

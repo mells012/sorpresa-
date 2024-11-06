@@ -7,7 +7,7 @@
 	
 	// Crear un objeto de audio para el archivo "Packing It Up.mp3"
 		var audio = new Audio('Packing It Up.mp3');
-	//
+	
 	p.initialize = function(canvas, config)
 	{
 		BasePiece.prototype.initialize.call(this, canvas, config);

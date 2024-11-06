@@ -110,10 +110,7 @@
 	p.reset = function()
 	{
 		var cfg = this.config, w = this.width, h = this.height, w2 = w/2, h2 = h/2;
-		
-    cfg.ampl = 0; // Desactiva el temblor vertical al inicio
-    cfg.amplHor = 0; // Desactiva el temblor horizontal al inicio
-    cfg.tril_hor_freq = 20; // Ajusta la frecuencia de temblor a un valor más alto
+
     
     this.road.gotoAndStop(this.midframe);		
 		this.acceleration = 0;
@@ -194,7 +191,7 @@ var currentAngle = 0; // Define el ángulo actual fuera de la función para mant
 function updateCarRotation(dir) {
     if (carImage) {
         // Calcula el ángulo objetivo basado en `dir`
-        var targetAngle = dir * 3; // Ajusta el valor `15` para controlar la inclinación máxima
+        var targetAngle = dir * 10; // Ajusta el valor `15` para controlar la inclinación máxima
 
         // Gradualmente ajusta el `currentAngle` hacia el `targetAngle`
         currentAngle += (targetAngle - currentAngle) * 0.3; // Ajusta `0.1` para la velocidad de suavizado

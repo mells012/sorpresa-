@@ -17,6 +17,7 @@
 
 	p.onKeyDown = function(e)
 	{
+		console.log("Key Down:", e.which);
 		var keycode = e.which;
 		//left right
 		if (keycode == 37) this.turndir = -1; 
@@ -28,6 +29,7 @@
 
 // Modifica la función `onKeyUp` para controlar la reproducción del audio
 p.onKeyUp = function(e) {
+	console.log("Key Up:", e.which);
     BasePiece.prototype.onKeyUp.call(this, e);
     var keycode = e.which;
     if (keycode == 37 || keycode == 39) this.turndir = 0;
@@ -217,7 +219,7 @@ function updateCarRotation(dir) {
     }
 }
 
-};
+}
 
 
 	p.accelerate = function(dir) 

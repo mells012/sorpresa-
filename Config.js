@@ -1,15 +1,14 @@
-//Conducción
 var Config = {};
 
 //base:
 Config.debug = false;
-Config.framerate = 20; //velocidad carretera
+Config.framerate = 20;
 Config.backgroundColor = '#000';
 
-//piece(inclinación):
+//piece:
 Config.maxtilt = 2;
 //
-Config.starspeed = 12; //velocidad estrellas
+Config.starspeed = 12;
 //tril amplitude (max, afhankelijk van snelheid) en amplitude horizontaal
 Config.ampl = .3;
 Config.amplHor = 1;

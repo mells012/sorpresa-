@@ -13,7 +13,7 @@ Config.starspeed = 12; //velocidad estrellas
 Config.ampl = .3;
 Config.amplHor = 1;
 //1 op tril_hor_freq keer ook horizontaal trillen
-Config.tril_hor_freq = 18;
+Config.tril_hor_freq = 8;
 //accelerationstep geeft aan hoe snel de auto versnelt
 Config.accelerationstep = .05;
 //speed_back_to_middle geeft aan hoe snel er terug naar het midden gestuurd wordt bij niet sturen

@@ -1,4 +1,4 @@
-@@ -1,9 +1,12 @@
+
 (function(window) {
 	var Piece = function(canvas, config)
 	{
@@ -12,7 +12,7 @@
 	p.initialize = function(canvas, config)
 	{
 
-@@ -23,314 +26,327 @@
+
 		if (keycode == 40) this.acceleration = -1;
 	}
 	

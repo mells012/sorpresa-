@@ -174,7 +174,7 @@
       if (!isActive) return;
 
       textLines[currentIndex].style.display = 'none'; // Oculta la línea actual
-      currentIndex = (currentIndex + 1) % totalLines; // Avanza al siguiente índice
+      currentIndex = (currentIndex) % totalLines; // Avanza al siguiente índice
       textLines[currentIndex].style.display = 'block'; // Muestra la nueva línea
     }
 

@@ -80,17 +80,88 @@
   <div id="output">.</div>
 
   <!-- Contenedor para la secuencia de líneas de texto -->
+  <!-- _____________________________LETRA____________________________________  -->
   <div class="text-sequence" id="textSequence">
-    <div class="text-line">Línea de texto 1</div>
-    <div class="text-line">Línea de texto 2</div>
-    <div class="text-line">Línea de texto 3</div>
-    <div class="text-line">Línea de texto 4</div>
+    <div class="text-line">                </div>
+    <div class="text-line">Mmm-mm, mm-mm</div>
+    <div class="text-line">Mmm-mm, mm-mm</div>
+    <div class="text-line">Mmm-mm, mm-mm</div>
+    <div class="text-line">Mmm-mm, mm-mm</div>
+    <div class="text-line">Mmm-mm, mm-mm, si... </div>
+    <div class="text-line">Hey! Andresito, sé que la apariencia puede ser engañosa</div>
+    <div class="text-line">Pero sé que vi una luz en ti</div>
+    <div class="text-line">Y mientras caminábamos, estábamos hablando</div>
+    <div class="text-line">No dije ni la mitad de las cosas que quería</div>
+    <div class="text-line">De todas la chicas lanzando piedras a tu ventana</div>
+    <div class="text-line">Seré la que espere ahí incluso cuando hace frío</div>
+    <div class="text-line">Hey! Andresito, chico, tal vez me tengas creyendo</div>
+    <div class="text-line">No tengo que estar sola siempre</div>
+
+    
+    <div class="text-line">Porque no puedo еvitarlo si te ves como un ángel</div>
+    <div class="text-line">No puеdo evitarlo si te quiero besar en la lluvia, entonces...</div>
+    <div class="text-line">Ven a sentir esta magia que he estado sintiendo desde que te conocí</div>
+    <div class="text-line">No puedo evitarlo, no nadie más como tú</div>
+    <div class="text-line">Mmm, no puedo contenerme a mí misma</div>
+
+    
+    <div class="text-line">Hey! Andresito, he estado aguantándome este sentimiento</div>
+    <div class="text-line">Por eso tengo algunas cosas que decirte</div>
+    <div class="text-line">Lo he visto todo, entonces pensé</div>
+    <div class="text-line">Pero nunca vi a alguien brillar en la manera que tú lo haces</div>
+    <div class="text-line">La forma en la que caminas, forma en la que hablas, forma en la que dices mi nombre</div>
+    <div class="text-line">Es hermosa, maravillosa, nunca cambies</div>
+    <div class="text-line">Hey! Andresito,¿Por qué las personas siempre se están yendo?</div>
+    <div class="text-line">Creo que tú y yo deberíamos permanecer igual</div>
+    
+    <div class="text-line">Porque no puedo еvitarlo si te ves como un ángel</div>
+    <div class="text-line">No puеdo evitarlo si te quiero besar en la lluvia, entonces...</div>
+    <div class="text-line">Ven a sentir esta magia que he estado sintiendo desde que te conocí</div>
+    <div class="text-line">No puedo evitarlo, no nadie más como tú</div>
+    <div class="text-line">Mmm, no puedo contenerme a mí misma</div>
+
+    
+    <div class="text-line">Están apagando la luz de la calle, eres perfecto para mí</div>
+    <div class="text-line">¿Por qué no estás aquí?</div>
+    <div class="text-line">Ahora estoy esperando sola,</div>
+    <div class="text-line">así que ven y sal afuera</div>
+    <div class="text-line">Y acércame y brilla, brilla, brilla</div>
+    <div class="text-line">Y acércame y brilla, brilla, brilla</div>
+    <div class="text-line">Hey! mi chico,podría darte cincuenta razones</div>
+    <div class="text-line">De por qué debería ser a la que elijas</div>
+    <div class="text-line">Todas aquellas chicas, bueno, son hermosas</div>
+    <div class="text-line">¿Pero crearian un programa exclusivo para ti?</div>
+    <div class="text-line">(...JA,JA)</div>
+        
+    <div class="text-line">Porque no puedo еvitarlo si te ves como un ángel</div>
+    <div class="text-line">No puеdo evitarlo si te quiero besar en la lluvia, entonces...</div>
+    <div class="text-line">Ven a sentir esta magia que he estado sintiendo desde que te conocí</div>
+    <div class="text-line">No puedo evitarlo, no nadie más como tú</div>
+    <div class="text-line">Mmm, no puedo contenerme a mí misma</div>
+    
+    <div class="text-line">Si te ves como un ángel!</div>
+    <div class="text-line">No puеdo evitarlo si te quiero besar en la lluvia, entonces...</div>
+    <div class="text-line">Ven a sentir esta magia que he estado sintiendo desde que te conocí</div>
+    <div class="text-line">No puedo evitarlo, no nadie más como tú</div>
+    <div class="text-line">Mmm, no puedo contenerme a mí misma</div>
+
+
+    <div class="text-line">Oh-uh, a mí misma </div>
+    <div class="text-line">Mmm-mm, no puedo contenerme a mí misma</div>
+    <div class="text-line">No puedo contenerme a mí misma</div>
+    <div class="text-line">Oh-oh-oh</div>
+    <div class="text-line">Mmm-mm, mm-mm</div>
+    <div class="text-line">Mmm-mm, mm-mm</div>
+    <div class="text-line">Mmm-mm, mm-mm</div>
+    <div class="text-line">Mmm-mm...</div>
+
+    
     <!-- Añade más líneas si es necesario -->
   </div>
 
 <!-- Script para controlar la secuencia de texto -->
   <script>
-    const duration = 2000; // Duración de aparición de cada línea (en milisegundos)
+    const duration = 3500; // Duración de aparición de cada línea (en milisegundos)
     let currentIndex = 0;
     let timer;
     let isActive = true;
@@ -123,7 +194,9 @@
     window.addEventListener('mousemove', resetActivityTimer);
     window.addEventListener('keydown', resetActivityTimer);
     window.addEventListener('click', resetActivityTimer);
+    
   </script>
+  <!-- __________________________________________________________________________-->
   
 </body>
 </html>

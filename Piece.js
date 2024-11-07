@@ -23,7 +23,7 @@
     if (keycode == 40) this.acceleration = -1;
     console.log("turndir:", this.turndir, "acceleration:", this.acceleration);
 }
-
+ 
 p.onKeyUp = function(e) {
     var keycode = e.which;
     if (keycode == 37 || keycode == 39) this.turndir = 0;
@@ -174,6 +174,7 @@ p.onKeyUp = function(e) {
 		//
 		this.moveStars(this.curve * this.speed * cfg.starspeed);
 		//
+		this.updateCarRotation(this.turndir);
 		return true;
 	}	
 		
@@ -203,6 +204,10 @@ p.onKeyUp = function(e) {
 var carImage = document.getElementById('carImage');
 var currentAngle = 0; // Define el ángulo actual fuera de la función para mantener el estado
 
+
+
+}
+
 function updateCarRotation(dir) {
     if (carImage) {
         // Calcula el ángulo objetivo basado en `dir`
@@ -214,8 +219,6 @@ function updateCarRotation(dir) {
         // Aplica la transformación al elemento del auto
         carImage.style.transform = `translate(-50%, -50%) rotate(${currentAngle}deg)`;
     }
-}
-
 }
 
 

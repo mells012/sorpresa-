@@ -9,17 +9,28 @@
 		var audio = new Audio('heystephen1.wav');
 	//
 	p.initialize = function(canvas, config)
-	{
-		BasePiece.prototype.initialize.call(this, canvas, config);
-		this.initInteraction();
-		window.onkeydown = this.onKeyDown.bind(this);
+{
+    BasePiece.prototype.initialize.call(this, canvas, config);
+    this.initInteraction();
+    window.onkeydown = this.onKeyDown.bind(this);
 
-		// Activa la secuencia de texto solo en modo de depuración
-    		if (config.debug) {
-        		startTextSequence(); // Llama a la función de secuencia de texto
-    		audio.play(); // Reproduce el audio
-		}
-	}
+    // Activa la secuencia de texto solo en modo de depuración
+    if (config.debug) {
+        startTextSequence(); // Llama a la función de secuencia de texto
+        
+        // Reproduce el audio después de la primera interacción del usuario
+        function playAudioOnInteraction() {
+            audio.play().catch(error => console.log("Error al reproducir audio:", error));
+            window.removeEventListener('click', playAudioOnInteraction);
+            window.removeEventListener('keydown', playAudioOnInteraction);
+        }
+
+        // Añade eventos de interacción para activar el audio
+        window.addEventListener('click', playAudioOnInteraction);
+        window.addEventListener('keydown', playAudioOnInteraction);
+    }
+}
+
 
 	p.onKeyDown = function(e)
 	{

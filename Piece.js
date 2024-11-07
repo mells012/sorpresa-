@@ -37,6 +37,7 @@
 	p.onKeyDown = function(e)
 	{
 		console.log("Key Down:", e.which);
+		config.debug = false; 
 		var keycode = e.which;
 		//left right
 		if (keycode == 37) this.turndir = -1; 

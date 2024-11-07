@@ -1,4 +1,3 @@
-@ -1,352 +1,354 @@
 (function(window) {
 	var Piece = function(canvas, config)
 	{

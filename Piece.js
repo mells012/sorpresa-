@@ -15,25 +15,22 @@
 		window.onkeydown = this.onKeyDown.bind(this);
 	}
 
-	p.onKeyDown = function(e)
-	{
-		console.log("Key Down:", e.which);
-		var keycode = e.which;
-		//left right
-		if (keycode == 37) this.turndir = -1; 
-		if (keycode == 39) this.turndir = 1;
-		//up down
-		if (keycode == 38) this.acceleration = 1;
-		if (keycode == 40) this.acceleration = -1;
-	}
+	p.onKeyDown = function(e) {
+    var keycode = e.which;
+    if (keycode == 37) this.turndir = -1; 
+    if (keycode == 39) this.turndir = 1;
+    if (keycode == 38) this.acceleration = 1;
+    if (keycode == 40) this.acceleration = -1;
+    console.log("turndir:", this.turndir, "acceleration:", this.acceleration);
+}
 
-// Modifica la función `onKeyUp` para controlar la reproducción del audio
 p.onKeyUp = function(e) {
-	console.log("Key Up:", e.which);
-    BasePiece.prototype.onKeyUp.call(this, e);
     var keycode = e.which;
     if (keycode == 37 || keycode == 39) this.turndir = 0;
     if (keycode == 38 || keycode == 40) this.acceleration = 0;
+    console.log("turndir:", this.turndir, "acceleration:", this.acceleration);
+}
+
 
     // Comando para controlar el audio según `this.config.debug`
     if (this.config.debug) {

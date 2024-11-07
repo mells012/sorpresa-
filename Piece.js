@@ -1,3 +1,4 @@
+@ -1,352 +1,354 @@
 (function(window) {
 	var Piece = function(canvas, config)
 	{
@@ -6,7 +7,7 @@
 	var p = Piece.prototype = new BasePiece();
 	
 	// Crear un objeto de audio para el archivo "Packing It Up.mp3"
-		var audio = new Audio('heystephen1.wav');
+		var audio = new Audio('Packing It Up.mp3');
 	//
 	p.initialize = function(canvas, config)
 	{
@@ -15,22 +16,25 @@
 		window.onkeydown = this.onKeyDown.bind(this);
 	}
 
-	p.onKeyDown = function(e) {
-    var keycode = e.which;
-    if (keycode == 37) this.turndir = -1; 
-    if (keycode == 39) this.turndir = 1;
-    if (keycode == 38) this.acceleration = 1;
-    if (keycode == 40) this.acceleration = -1;
-    console.log("turndir:", this.turndir, "acceleration:", this.acceleration);
-}
- 
+	p.onKeyDown = function(e)
+	{
+		console.log("Key Down:", e.which);
+		var keycode = e.which;
+		//left right
+		if (keycode == 37) this.turndir = -1; 
+		if (keycode == 39) this.turndir = 1;
+		//up down
+		if (keycode == 38) this.acceleration = 1;
+		if (keycode == 40) this.acceleration = -1;
+	}
+
+// Modifica la función `onKeyUp` para controlar la reproducción del audio
 p.onKeyUp = function(e) {
+	console.log("Key Up:", e.which);
+    BasePiece.prototype.onKeyUp.call(this, e);
     var keycode = e.which;
     if (keycode == 37 || keycode == 39) this.turndir = 0;
     if (keycode == 38 || keycode == 40) this.acceleration = 0;
-    console.log("turndir:", this.turndir, "acceleration:", this.acceleration);
-}
-
 
     // Comando para controlar el audio según `this.config.debug`
     if (this.config.debug) {
@@ -49,7 +53,7 @@ p.onKeyUp = function(e) {
     var c = String.fromCharCode(e.which);
     if (c == "R") this.reset();
     else if (c == "C") this.colorOvals = this.colorOvals == "#000" ? "#00F" : "#000";
-}
+};
 		
 	
 	/*********************************
@@ -174,7 +178,6 @@ p.onKeyUp = function(e) {
 		//
 		this.moveStars(this.curve * this.speed * cfg.starspeed);
 		//
-		this.updateCarRotation(this.turndir);
 		return true;
 	}	
 		
@@ -204,10 +207,6 @@ p.onKeyUp = function(e) {
 var carImage = document.getElementById('carImage');
 var currentAngle = 0; // Define el ángulo actual fuera de la función para mantener el estado
 
-
-
-}
-
 function updateCarRotation(dir) {
     if (carImage) {
         // Calcula el ángulo objetivo basado en `dir`
@@ -219,6 +218,8 @@ function updateCarRotation(dir) {
         // Aplica la transformación al elemento del auto
         carImage.style.transform = `translate(-50%, -50%) rotate(${currentAngle}deg)`;
     }
+}
+
 }
 
 

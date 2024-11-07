@@ -16,20 +16,20 @@
     		window.onkeydown = this.onKeyDown.bind(this);
 
     	// Activa la secuencia de texto y prepara el audio solo en modo de depuración
-    	if (config.debug) {
-        	startTextSequence(); // Inicia la secuencia de texto
+    	//if (config.debug) {
+        //	startTextSequence(); // Inicia la secuencia de texto
 
         // Función para reproducir el audio solo después de la primera interacción
-        function playAudioOnInteraction() {
-            audio.play().catch(error => console.log("Error al reproducir audio:", error));
+        //function playAudioOnInteraction() {
+          //  audio.play().catch(error => console.log("Error al reproducir audio:", error));
             // Elimina los event listeners después de la primera reproducción
-            window.removeEventListener('click', playAudioOnInteraction);
-            window.removeEventListener('keydown', playAudioOnInteraction);
+            //window.removeEventListener('click', playAudioOnInteraction);
+            //window.removeEventListener('keydown', playAudioOnInteraction);
         }
 
         // Agrega event listeners para activar el audio con la primera interacción
-        window.addEventListener('click', playAudioOnInteraction);
-        window.addEventListener('keydown', playAudioOnInteraction);
+        // window.addEventListener('click', playAudioOnInteraction);
+       // window.addEventListener('keydown', playAudioOnInteraction);
     		}
 	}
 
@@ -55,8 +55,9 @@ p.onKeyUp = function(e) {
     if (keycode == 38 || keycode == 40) this.acceleration = 0;
 
     // Comando para controlar el audio según `this.config.debug`
-    if (this.config.debug) {
+    if (config.debug) {
         // Si `debug` es true, reproduce el audio
+	    startTextSequence(); // Inicia la secuencia de texto
         if (audio.paused) {
             audio.play();
         }

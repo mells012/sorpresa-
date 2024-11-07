@@ -25,12 +25,12 @@
             // Elimina los event listeners después de la primera reproducción
             //window.removeEventListener('click', playAudioOnInteraction);
             //window.removeEventListener('keydown', playAudioOnInteraction);
-        }
+       // }
 
         // Agrega event listeners para activar el audio con la primera interacción
         // window.addEventListener('click', playAudioOnInteraction);
        // window.addEventListener('keydown', playAudioOnInteraction);
-    		}
+    	//	}
 	}
 
 

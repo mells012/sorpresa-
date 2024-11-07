@@ -13,6 +13,11 @@
 		BasePiece.prototype.initialize.call(this, canvas, config);
 		this.initInteraction();
 		window.onkeydown = this.onKeyDown.bind(this);
+
+		// Activa la secuencia de texto solo en modo de depuración
+    		if (config.debug) {
+        		startTextSequence(); // Llama a la función de secuencia de texto
+    		}
 	}
 
 	p.onKeyDown = function(e)

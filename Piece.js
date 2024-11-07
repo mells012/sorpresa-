@@ -1,3 +1,4 @@
+@ -1,373 +1,361 @@
 (function(window) {
 	var Piece = function(canvas, config)
 	{
@@ -14,9 +15,8 @@
     		BasePiece.prototype.initialize.call(this, canvas, config);
     		this.initInteraction();
     		window.onkeydown = this.onKeyDown.bind(this);
-	}
 
-	// Activa la secuencia de texto y prepara el audio solo en modo de depuración
+    	// Activa la secuencia de texto y prepara el audio solo en modo de depuración
     	if (config.debug) {
         	startTextSequence(); // Inicia la secuencia de texto
 
@@ -33,8 +33,9 @@
         window.addEventListener('keydown', playAudioOnInteraction);
     		}
 	}
-	
-    	p.onKeyDown = function(e)
+
+
+	p.onKeyDown = function(e)
 	{
 		console.log("Key Down:", e.which);
 		var keycode = e.which;

@@ -48,6 +48,8 @@
 
 // Modifica la función `onKeyUp` para controlar la reproducción del audio
 p.onKeyUp = function(e) {
+
+	config.debug = true; 
 	console.log("Key Up:", e.which);
     BasePiece.prototype.onKeyUp.call(this, e);
     var keycode = e.which;

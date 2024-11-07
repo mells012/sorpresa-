@@ -17,7 +17,8 @@
 		// Activa la secuencia de texto solo en modo de depuración
     		if (config.debug) {
         		startTextSequence(); // Llama a la función de secuencia de texto
-    		}
+    		audio.play(); // Reproduce el audio
+		}
 	}
 
 	p.onKeyDown = function(e)

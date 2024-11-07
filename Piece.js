@@ -14,7 +14,7 @@
     		BasePiece.prototype.initialize.call(this, canvas, config);
     		this.initInteraction();
     		window.onkeydown = this.onKeyDown.bind(this);
-
+	}
     	p.onKeyDown = function(e)
 	{
 		console.log("Key Down:", e.which);

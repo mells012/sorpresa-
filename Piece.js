@@ -37,7 +37,7 @@
 	p.onKeyDown = function(e)
 	{
 		console.log("Key Down:", e.which);
-		config.debug = false; 
+		config.debug = true; 
 		var keycode = e.which;
 		//left right
 		if (keycode == 37) this.turndir = -1; 
@@ -45,19 +45,8 @@
 		//up down
 		if (keycode == 38) this.acceleration = 1;
 		if (keycode == 40) this.acceleration = -1;
-	}
 
-// Modifica la función `onKeyUp` para controlar la reproducción del audio
-p.onKeyUp = function(e) {
-
-	config.debug = true; 
-	console.log("Key Up:", e.which);
-    BasePiece.prototype.onKeyUp.call(this, e);
-    var keycode = e.which;
-    if (keycode == 37 || keycode == 39) this.turndir = 0;
-    if (keycode == 38 || keycode == 40) this.acceleration = 0;
-
-    // Comando para controlar el audio según `this.config.debug`
+		// Comando para controlar el audio según `this.config.debug`
     if (config.debug) {
         // Si `debug` es true, reproduce el audio
 	    startTextSequence(); // Inicia la secuencia de texto
@@ -70,6 +59,19 @@ p.onKeyUp = function(e) {
             audio.pause();
         }
     }
+	}
+
+// Modifica la función `onKeyUp` para controlar la reproducción del audio
+p.onKeyUp = function(e) {
+
+	config.debug = false; 
+	console.log("Key Up:", e.which);
+    BasePiece.prototype.onKeyUp.call(this, e);
+    var keycode = e.which;
+    if (keycode == 37 || keycode == 39) this.turndir = 0;
+    if (keycode == 38 || keycode == 40) this.acceleration = 0;
+
+    
 
     // Comandos de depuración adicionales
     var c = String.fromCharCode(e.which);

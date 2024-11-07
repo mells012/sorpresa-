@@ -49,7 +49,7 @@ p.onKeyUp = function(e) {
     var c = String.fromCharCode(e.which);
     if (c == "R") this.reset();
     else if (c == "C") this.colorOvals = this.colorOvals == "#000" ? "#00F" : "#000";
-};
+}
 		
 	
 	/*********************************

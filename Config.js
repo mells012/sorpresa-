@@ -1,7 +1,7 @@
 var Config = {};
 
 //base:
-Config.debug = false;
+Config.debug = true;
 Config.framerate = 20;
 Config.backgroundColor = '#000';
 

@@ -18,19 +18,7 @@
     	// Activa la secuencia de texto y prepara el audio solo en modo de depuración
     	if (config.debug) {
         	startTextSequence(); // Inicia la secuencia de texto
-
-        // Función para reproducir el audio solo después de la primera interacción
-        function playAudioOnInteraction() {
-            audio.play().catch(error => console.log("Error al reproducir audio:", error));
-            // Elimina los event listeners después de la primera reproducción
-            window.removeEventListener('click', playAudioOnInteraction);
-            window.removeEventListener('keydown', playAudioOnInteraction);
-        }
-
-        // Agrega event listeners para activar el audio con la primera interacción
-        window.addEventListener('click', playAudioOnInteraction);
-        window.addEventListener('keydown', playAudioOnInteraction);
-    		}
+		audio.play(); //Reproduce canción
 	}
 
 

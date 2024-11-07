@@ -15,14 +15,7 @@
     		this.initInteraction();
     		window.onkeydown = this.onKeyDown.bind(this);
 
-    	// Activa la secuencia de texto y prepara el audio solo en modo de depuración
-    	if (config.debug) {
-        	startTextSequence(); // Inicia la secuencia de texto
-		audio.play(); //Reproduce canción
-	}
-
-
-	p.onKeyDown = function(e)
+    	p.onKeyDown = function(e)
 	{
 		console.log("Key Down:", e.which);
 		var keycode = e.which;
@@ -46,11 +39,13 @@ p.onKeyUp = function(e) {
     if (this.config.debug) {
         // Si `debug` es true, reproduce el audio
         if (audio.paused) {
+		startTextSequence(); // Inicia la secuencia de texto
             audio.play();
         }
     } else {
         // Si `debug` es false, pausa el audio
         if (!audio.paused) {
+		pauseTextSequence(); // Pausa la secuencia de texto
             audio.pause();
         }
     }

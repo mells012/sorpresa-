@@ -45,7 +45,7 @@ p.onKeyUp = function(e) {
     } else {
         // Si `debug` es false, pausa el audio
         if (!audio.paused) {
-		pauseTextSequence(); // Pausa la secuencia de texto
+		resetActivityTimer(); // Pausa la secuencia de texto
             audio.pause();
         }
     }

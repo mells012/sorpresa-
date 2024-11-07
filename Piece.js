@@ -58,13 +58,11 @@ p.onKeyUp = function(e) {
     if (this.config.debug) {
         // Si `debug` es true, reproduce el audio
         if (audio.paused) {
-		
             audio.play();
         }
     } else {
         // Si `debug` es false, pausa el audio
         if (!audio.paused) {
-		
             audio.pause();
         }
     }

@@ -161,11 +161,14 @@
 
 <!-- Script para controlar la secuencia de texto -->
   <script>
-function startTextSequence() {
+    
+    const duration = 517.24; // Duración de aparición de cada línea (en milisegundos)
+    let currentIndex = 0;
+    let timer;
+    let isActive = true;
+
     const textLines = document.querySelectorAll('.text-line');
     const totalLines = textLines.length;
-    let currentIndex = 0;
-    let duration = 517.24; // Cambia el tiempo en milisegundos si es necesario
 
     // Función para mostrar la siguiente línea de texto
     function showNextLine() {
@@ -176,11 +179,24 @@ function startTextSequence() {
       textLines[currentIndex].style.display = 'block'; // Muestra la nueva línea
     }
 
-    // Ejecuta `showNextLine` cada `duration` milisegundos
-    setInterval(showNextLine, duration);
-}
-</script>
+    // Inicia la secuencia de aparición de texto
+    function startTextSequence() {
+      timer = setInterval(showNextLine, duration);
+    }
 
+    // Pausa la secuencia cuando no hay actividad
+    function resetActivityTimer() {
+      isActive = true;
+      clearTimeout(activityTimeout);
+      activityTimeout = setTimeout(() => isActive = false, 5000);
+    }
+
+    let activityTimeout = setTimeout(() => isActive = false, 5000);
+    window.addEventListener('mousemove', resetActivityTimer);
+    window.addEventListener('keydown', resetActivityTimer);
+    window.addEventListener('click', resetActivityTimer);
+    
+  </script>
   <!-- __________________________________________________________________________-->
   
 </body>

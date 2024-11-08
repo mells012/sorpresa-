@@ -190,6 +190,8 @@ document.addEventListener('DOMContentLoaded', function() {
   // Inicia la secuencia de aparición de texto
 function startTextSequence() {
   if (isPlaying || window.debugging) return; // No inicies si ya está en ejecución o en modo depuración
+  
+  if (timer) clearInterval(timer); // Limpia cualquier timer existente
   showNextLine(); // Muestra la primera línea inmediatamente
   timer = setInterval(showNextLine, duration);
   isPlaying = true;
@@ -198,6 +200,10 @@ function startTextSequence() {
 
 // Pausar la secuencia de texto
 function pauseTextSequence() {
+  if (timer) {
+    clearInterval(timer);
+    timer = null; // Asegúrate de reiniciar el timer
+  }
   
   if (isPlaying) {
     isPlaying = false;

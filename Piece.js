@@ -16,7 +16,7 @@
     window.onkeyup = this.onKeyUp.bind(this); // Asegúrate de que `onKeyUp` esté enlazado
 
     // Inicia la secuencia de texto y audio solo si el modo de depuración está activado
-    if (config.debug) {
+    if (this.config.debug) {
         this.startAudioAndText();
     }
 }

@@ -14,6 +14,7 @@
     this.initInteraction();
     window.onkeydown = this.onKeyDown.bind(this);
 	window.onkeyup = this.onKeyUp.bind(this);
+	window.onhandlemouseup = this.onhandleMouseUp.bind(this);
     
     // Iniciar audio y secuencia de texto al cargar
     this.startAudioAndText();
@@ -35,12 +36,12 @@
     }
 
     // Escuchar eventos para reproducir el audio
-    ['keydown', 'click'].forEach(eventType => {
+    ['keydown'].forEach(eventType => {
         window.addEventListener(eventType, playAudio);
     })
 
     // Escuchar eventos para pausar el audio
-    ['keyup', 'handleMouseUp'].forEach(eventType => {
+    ['keyup', 'handlemouseup'].forEach(eventType => {
         window.addEventListener(eventType, pauseAudio);
     })
 

@@ -165,24 +165,15 @@ function startTextSequence() {
     const textLines = document.querySelectorAll('.text-line');
     const totalLines = textLines.length;
     let currentIndex = 0;
-    let duration = 3000; // Cambia el tiempo en milisegundos si es necesario
+    let duration = 517.24; // Cambia el tiempo en milisegundos si es necesario
 
+    // Función para mostrar la siguiente línea de texto
     function showNextLine() {
-        // Asegúrate de que las líneas de texto existan
-        if (textLines.length === 0) return;
+      if (!isActive) return;
 
-        // Oculta la línea anterior
-        if (currentIndex > 0) {
-            textLines[currentIndex - 1].style.display = 'none';
-        }
-        
-        // Muestra la siguiente línea
-        if (currentIndex < totalLines) {
-            textLines[currentIndex].style.display = 'block';
-            currentIndex++;
-        } else {
-            currentIndex = 0; // Reinicia la secuencia si llegamos al final
-        }
+      textLines[currentIndex].style.display = 'none'; // Oculta la línea actual
+      currentIndex = (currentIndex) % totalLines; // Avanza al siguiente índice
+      textLines[currentIndex].style.display = 'block'; // Muestra la nueva línea
     }
 
     // Ejecuta `showNextLine` cada `duration` milisegundos

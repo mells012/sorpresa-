@@ -62,7 +62,7 @@ p.onKeyUp = function(e) {
     if (keycode == 38 || keycode == 40) this.acceleration = 0;
 
     // Controla el audio y la secuencia de texto según el estado de depuración
-    if (this.config.debug) {
+    if (config.debug) {
         if (audio.paused) {
             audio.play();
         }

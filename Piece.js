@@ -32,8 +32,7 @@ p.startAudioAndText = function() {
     ['keydown', 'mousemove', 'click'].forEach(eventType => {
         window.addEventListener(eventType, () => {
             playAudio();
-            startTextSequence();
-            
+                       
         })
     })
 }
@@ -70,7 +69,7 @@ p.onKeyUp = function(e) {
         if (audio.paused) {
             audio.play();
         }
-        startTextSequence(); // Inicia la secuencia de texto
+        
     } else {
         // Si `debug` es false, pausa el audio
         if (!audio.paused) {

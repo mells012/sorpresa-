@@ -18,6 +18,23 @@
     this.startAudioAndText();
 }
 
+	p.startAudioAndText = function() {
+    // Reproducir el audio en cada interacción del usuario
+    function playAudio() {
+        if (audio.paused) {
+            audio.play().catch(error => console.log("Error al reproducir audio:", error));
+        }
+    }
+
+    // Escuchar múltiples eventos para reproducir el audio y mostrar el texto
+    ['keydown', 'mousemove', 'click'].forEach(eventType => {
+        window.addEventListener(eventType, () => {
+            playAudio();
+                       
+        })
+    })
+}
+
 p.onKeyDown = function(e) {
     console.log("Key Down:", e.which);
     var keycode = e.which;
@@ -40,21 +57,7 @@ p.onKeyUp = function(e) {
     if (keycode == 37 || keycode == 39) this.turndir = 0;
     if (keycode == 38 || keycode == 40) this.acceleration = 0;
 
-    // Asegúrate de usar `this.config` en lugar de `config`
-    if (this.config.debug) {
-        // Si `debug` es true, reproduce el audio y muestra el texto
-        if (audio.paused) {
-            audio.play();
-        }
-        
-    } else {
-        // Si `debug` es false, pausa el audio
-        if (!audio.paused) {
-            audio.pause();
-        }
-    }
-
-    // Comandos de depuración adicionales
+    // Comandos de depuración adicionales EXTRA
     var c = String.fromCharCode(e.which);
     if (c == "R") this.reset();
     else if (c == "C") this.colorOvals = this.colorOvals == "#000" ? "#00F" : "#000";

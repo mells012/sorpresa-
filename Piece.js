@@ -18,29 +18,6 @@
     this.startAudioAndText();
 }
 
-
-
-p.startAudioAndText = function() {
-    // Reproducir el audio en cada interacción del usuario
-    function playAudio() {
-        if (audio.paused) {
-            audio.play().catch(error => console.log("Error al reproducir audio:", error));
-        }
-    }
-
-    // Escuchar múltiples eventos para reproducir el audio y mostrar el texto
-    ['keydown', 'mousemove', 'click'].forEach(eventType => {
-        window.addEventListener(eventType, () => {
-            playAudio();
-                       
-        })
-    })
-}
-
-
-
-
-
 p.onKeyDown = function(e) {
     console.log("Key Down:", e.which);
     var keycode = e.which;

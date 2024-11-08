@@ -37,7 +37,7 @@
         }
 
         // Escuchar eventos para reproducir el audio
-        ['keydown', 'click'].forEach(eventType => {
+        ['keydown', 'mousedown'].forEach(eventType => {
             window.addEventListener(eventType, playAudio);
         });
 

@@ -233,16 +233,15 @@ document.addEventListener('DOMContentLoaded', function() {
 ['keyup', 'mouseup'].forEach(eventType => {
   window.addEventListener(eventType, () => {
     // Pausar la secuencia si está reproduciéndose o si está en modo de depuración
-    if (isPlaying) {
-      if (window.debugging) {
-        console.log("Depuración activada, secuencia pausada");
-      }
-      textLines[currentIndex].style.display = 'none'; // Ocultar la línea actual
-      pauseTextSequence();
+    if (isPlaying && window.debugging) {
+        console.log("Depuración estaba activada, secuencia pausada");
+        pauseTextSequence();
     }
+    });
   });
-});
 
+
+  
 });
 </script>
 

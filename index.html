@@ -219,19 +219,28 @@ document.addEventListener('DOMContentLoaded', function() {
     pauseTextSequence(); // Pausar si no hay actividad al inicio
   }, 5000);
 
-  // Escuchar eventos para iniciar la secuencia
-  ['keydown', 'mousedown'].forEach(eventType => {
-    window.addEventListener(eventType, () => {
+  // Escuchar eventos para iniciar la secuencia solo si no está en depuración y no está ya reproduciéndose
+['keydown', 'mousedown'].forEach(eventType => {
+  window.addEventListener(eventType, () => {
+    if (!isPlaying && !window.debugging) { // Verifica que no esté ya en ejecución ni en depuración
       startTextSequence();
       resetActivityTimer();
-    });
+    }
   });
+});
+
 
   // Escuchar eventos para pausar la secuencia
   ['keyup', 'mouseup'].forEach(eventType => {
-    window.addEventListener(eventType, pauseTextSequence);
+    window.addEventListener(eventType, , () => {
+    if (isPlaying && window.debugging) { // Verifica que no esté ya en ejecución ni en depuración
+      textLines[currentIndex].style.display = 'none';
+      pauseTextSequence();
+      resetActivityTimer();
+    }
   });
 });
+  
 </script>
 
 <!-- __________________________________________________________________________-->

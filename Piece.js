@@ -13,13 +13,11 @@
     BasePiece.prototype.initialize.call(this, canvas, config);
     this.initInteraction();
     window.onkeydown = this.onKeyDown.bind(this);
-    window.onkeyup = this.onKeyUp.bind(this); // Asegúrate de que `onKeyUp` esté enlazado
-
-    // Inicia la secuencia de texto y audio solo si el modo de depuración está activado
-    if (config.debug) {
-        this.startAudioAndText();
-    }
+    
+    // Iniciar audio y secuencia de texto al cargar
+    this.startAudioAndText();
 }
+
 
 p.startAudioAndText = function() {
     // Reproducir el audio en cada interacción del usuario

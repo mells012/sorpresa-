@@ -357,6 +357,24 @@ function updateCarRotation(dir) {
 
 }
 
+	// Ajustar el tamaño del auto para pantallas pequeñas
+function adjustCarSize() {
+    const carImage = document.getElementById('carImage');
+    if (window.innerWidth <= 768) { // Si la pantalla es menor o igual a 768px
+        carImage.style.width = '300px';
+        carImage.style.height = 'auto';
+        carImage.style.bottom = '-30%';
+    } else {
+        carImage.style.width = '470px'; // Tamaño original
+        carImage.style.height = '60vh';
+        carImage.style.bottom = '-45%';
+    }
+}
+
+window.addEventListener('resize', adjustCarSize);
+adjustCarSize(); // Llamar una vez al cargar la página
+
+
 
 	p.accelerate = function(dir) 
 	{

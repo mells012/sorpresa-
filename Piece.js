@@ -2,7 +2,7 @@
     var Piece = function(canvas, config) {
         this.initialize(canvas, config);
     }
-
+ 
     var p = Piece.prototype = new BasePiece();
 
     // Crear un objeto de audio para el archivo "heystephen1.wav"

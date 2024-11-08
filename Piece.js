@@ -23,17 +23,19 @@ p.startAudioAndText = function() {
     // Reproducir el audio en cada interacción del usuario
     function playAudio() {
         if (audio.paused) {
-            
+            audio.currentTime = 0; // Reinicia el audio al principio si está pausado
             audio.play().catch(error => console.log("Error al reproducir audio:", error));
         }
     }
 
-    // Escuchar eventos de tecla para reproducir el audio
-    window.addEventListener('keydown', playAudio);
+    // Escuchar múltiples eventos para reproducir el audio
+    ['keydown', 'mousemove', 'click'].forEach(eventType => {
+        window.addEventListener(eventType, playAudio);
+    })
 
     // Inicia la secuencia de texto una vez y la mantiene corriendo
     startTextSequence();
-};
+}
 
 
 

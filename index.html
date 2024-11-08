@@ -169,82 +169,91 @@ document.addEventListener('DOMContentLoaded', function() {
   let timer;
   let isActive = true;
   let isPlaying = false; // Controla si la secuencia está en ejecución
+  let keysPressed = new Set(); // Controla las teclas actualmente presionadas
+  let mouseDown = false; // Controla si el mouse está presionado
 
-
-  // Obtener las líneas de texto después de que el DOM esté completamente cargado
   const textLines = document.querySelectorAll('.text-line');
   const totalLines = textLines.length;
 
-  // Función para mostrar la siguiente línea de texto
   function showNextLine() {
     if (textLines.length === 0) return;
-
-    // Oculta la línea actual
     textLines[currentIndex].style.display = 'none';
-
-    // Avanza al siguiente índice y muestra la nueva línea
     currentIndex = (currentIndex + 1) % totalLines;
     textLines[currentIndex].style.display = 'block';
   }
 
-  // Inicia la secuencia de aparición de texto
-function startTextSequence() {
-  if (isPlaying || window.debugging) return; // No inicies si ya está en ejecución o en modo depuración
-  
-  if (timer) clearInterval(timer); // Limpia cualquier timer existente
-  showNextLine(); // Muestra la primera línea inmediatamente
-  timer = setInterval(showNextLine, duration);
-  isPlaying = true;
-  console.log("Secuencia iniciada");
-}
-
-// Pausar la secuencia de texto
-function pauseTextSequence() {
-  if (timer) {
-    clearInterval(timer);
-    timer = null; // Asegúrate de reiniciar el timer
+  function startTextSequence() {
+    if (isPlaying || window.debugging) return;
+    if (timer) clearInterval(timer);
+    showNextLine();
+    timer = setInterval(showNextLine, duration);
+    isPlaying = true;
+    console.log("Secuencia iniciada");
   }
-  
-  if (isPlaying) {
-    isPlaying = false;
-    console.log("Secuencia pausada");
-  }
-}
 
-  // Pausar la secuencia de texto si no hay actividad
+  function pauseTextSequence() {
+    if (timer) {
+      clearInterval(timer);
+      timer = null;
+    }
+    if (isPlaying) {
+      isPlaying = false;
+      console.log("Secuencia pausada");
+    }
+  }
+
   function resetActivityTimer() {
     isActive = true;
     clearTimeout(activityTimeout);
-   activityTimeout = setTimeout(() => {
-      isActive = false;
-      pauseTextSequence(); // Pausar si no hay actividad
+    activityTimeout = setTimeout(() => {
+      if (keysPressed.size === 0 && !mouseDown) { // Solo pausar si no hay actividad
+        isActive = false;
+        pauseTextSequence();
+      }
     }, 5000);
   }
 
   let activityTimeout = setTimeout(() => {
-    isActive = false;
-    pauseTextSequence(); // Pausar si no hay actividad al inicio
+    if (keysPressed.size === 0 && !mouseDown) {
+      isActive = false;
+      pauseTextSequence();
+    }
   }, 5000);
 
   // Escuchar eventos para iniciar la secuencia solo si no está en depuración y no está ya reproduciéndose
-['keydown', 'mousedown'].forEach(eventType => {
-  window.addEventListener(eventType, () => {
-    if (!isPlaying && !window.debugging) {
-      startTextSequence();
-      resetActivityTimer();
-    }
+  ['keydown', 'mousedown'].forEach(eventType => {
+    window.addEventListener(eventType, (event) => {
+      if (!isPlaying && !window.debugging) {
+        startTextSequence();
+        resetActivityTimer();
+      }
+      if (eventType === 'keydown') {
+        keysPressed.add(event.key);
+      }
+      if (eventType === 'mousedown') {
+        mouseDown = true;
+      }
+    });
+  });
+
+  // Escuchar eventos para pausar la secuencia
+  ['keyup', 'mouseup'].forEach(eventType => {
+    window.addEventListener(eventType, (event) => {
+      if (eventType === 'keyup') {
+        keysPressed.delete(event.key);
+      }
+      if (eventType === 'mouseup') {
+        mouseDown = false;
+      }
+
+      if (keysPressed.size === 0 && !mouseDown) {
+        pauseTextSequence();
+      }
+    });
   });
 });
-
-// Escuchar eventos para pausar la secuencia
-['keyup', 'mouseup'].forEach(eventType => {
-  window.addEventListener(eventType, pauseTextSequence);
-});
-
-
-  
-});
 </script>
+
 
 <!-- __________________________________________________________________________-->
   

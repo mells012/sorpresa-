@@ -21,22 +21,22 @@
     }
 }
 
-// Nueva función para iniciar audio y secuencia de texto
 p.startAudioAndText = function() {
-    // Reproducir audio solo una vez cuando haya interacción del usuario
-    function playAudioOnInteraction() {
-        audio.play().catch(error => console.log("Error al reproducir audio:", error));
-        window.removeEventListener('click', playAudioOnInteraction);
-        window.removeEventListener('keydown', playAudioOnInteraction);
+    // Reproducir el audio en cada interacción del usuario
+    function playAudio() {
+        if (audio.paused) {
+            audio.currentTime = 0; // Reinicia el audio al principio
+            audio.play().catch(error => console.log("Error al reproducir audio:", error));
+        }
     }
 
-    // Escuchar el primer evento de clic o tecla para reproducir el audio
-    window.addEventListener('click', playAudioOnInteraction);
-    window.addEventListener('keydown', playAudioOnInteraction);
+    // Escuchar eventos de tecla para reproducir el audio
+    window.addEventListener('keydown', playAudio);
 
-    // Inicia la secuencia de texto
+    // Inicia la secuencia de texto una vez y la mantiene corriendo
     startTextSequence();
 };
+
 
 
 

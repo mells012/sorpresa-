@@ -40,11 +40,11 @@
     })
 
     // Escuchar eventos para pausar el audio
-    ['keyup', 'mouseup'].forEach(eventType => {
+    ['keyup', 'handleMouseUp'].forEach(eventType => {
         window.addEventListener(eventType, pauseAudio);
     })
 
-}
+};
 
 p.onKeyDown = function(e) {
     console.log("Key Down:", e.which);

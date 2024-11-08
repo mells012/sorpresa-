@@ -1,7 +1,7 @@
 (function(window) {
     var Piece = function(canvas, config) {
         this.initialize(canvas, config);
-    }
+    } 
  
     var p = Piece.prototype = new BasePiece();
 	var audio = new Audio('heystephen1.wav'); // Audio para la canción

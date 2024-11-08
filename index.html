@@ -166,6 +166,8 @@ document.addEventListener('DOMContentLoaded', function() {
   let currentIndex = 0;
   let timer;
   let isActive = true;
+  let isPlaying = false; // Controla si la secuencia está en ejecución
+
 
   // Obtener las líneas de texto después de que el DOM esté completamente cargado
   const textLines = document.querySelectorAll('.text-line');
@@ -185,25 +187,48 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // Inicia la secuencia de aparición de texto
   function startTextSequence() {
+    if (isPlaying) return; // No inicies si ya está en ejecución
     if (timer) clearInterval(timer); // Si ya hay un timer, límpialo primero
     showNextLine(); // Muestra la primera línea inmediatamente
     timer = setInterval(showNextLine, duration);
+    isPlaying = true;
+    console.log("Secuencia iniciada");
+  }
+
+   // Pausar la secuencia de texto
+  function pauseTextSequence() {
+    if (timer) clearInterval(timer);
+    isPlaying = false;
+    console.log("Secuencia pausada");
   }
 
   // Pausar la secuencia de texto si no hay actividad
   function resetActivityTimer() {
     isActive = true;
     clearTimeout(activityTimeout);
-    activityTimeout = setTimeout(() => isActive = false, 5000);
+   activityTimeout = setTimeout(() => {
+      isActive = false;
+      pauseTextSequence(); // Pausar si no hay actividad
+    }, 5000);
   }
 
-  let activityTimeout = setTimeout(() => isActive = false, 5000);
+  let activityTimeout = setTimeout(() => {
+    isActive = false;
+    pauseTextSequence(); // Pausar si no hay actividad al inicio
+  }, 5000);
 
-  // Escuchar eventos para reactivar la secuencia de texto
-  window.addEventListener('mousemove', resetActivityTimer);
-  window.addEventListener('keydown', resetActivityTimer);
-  window.addEventListener('click', resetActivityTimer);
+  // Escuchar eventos para iniciar la secuencia
+  ['keydown', 'mousedown'].forEach(eventType => {
+    window.addEventListener(eventType, () => {
+      startTextSequence();
+      resetActivityTimer();
+    });
+  });
 
+  // Escuchar eventos para pausar la secuencia
+  ['keyup', 'mouseup'].forEach(eventType => {
+    window.addEventListener(eventType, pauseTextSequence);
+  });
 });
 </script>
 

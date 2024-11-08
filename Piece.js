@@ -1,113 +1,112 @@
 (function(window) {
-	var Piece = function(canvas, config)
-	{
-		this.initialize(canvas, config);
-	}
-	var p = Piece.prototype = new BasePiece();
-	
-	// Crear un objeto de audio para el archivo "heystephen1.wav"
-		var audio = new Audio('heystephen1.wav');
-	//
-	
-	p.initialize = function(canvas, config) {
-    BasePiece.prototype.initialize.call(this, canvas, config);
-    this.initInteraction();
-    window.onkeydown = this.onKeyDown.bind(this);
-	window.onkeyup = this.onKeyUp.bind(this);
-	window.onhandlemouseup = this.onhandleMouseUp.bind(this);
-    
-    // Iniciar audio y secuencia de texto al cargar
-    this.startAudioAndText();
-}
-
-	p.startAudioAndText = function() {
-   // Función para reproducir el audio
-    function playAudio() {
-        if (audio.paused) {
-            audio.play().catch(error => console.log("Error al reproducir audio:", error));
-        }
+    var Piece = function(canvas, config) {
+        this.initialize(canvas, config);
     }
 
-    // Función para pausar el audio
-    function pauseAudio() {
-        if (!audio.paused) {
-            audio.pause();
-        }
+    var p = Piece.prototype = new BasePiece();
+
+    // Crear un objeto de audio para el archivo "heystephen1.wav"
+    var audio = new Audio('heystephen1.wav');
+
+    // Inicializar el objeto
+    p.initialize = function(canvas, config) {
+        BasePiece.prototype.initialize.call(this, canvas, config);
+        this.initInteraction();
+        window.onkeydown = this.onKeyDown.bind(this);
+        window.onkeyup = this.onKeyUp.bind(this);
+        window.onmouseup = this.handleMouseUp.bind(this);
+
+        // Iniciar audio y secuencia de texto al cargar
+        this.startAudioAndText();
     }
 
-    // Escuchar eventos para reproducir el audio
-    ['keydown'].forEach(eventType => {
-        window.addEventListener(eventType, playAudio);
-    })
+    // Función para reproducir y pausar audio basado en eventos
+    p.startAudioAndText = function() {
+        // Reproducir el audio
+        function playAudio() {
+            if (audio.paused) {
+                audio.play().catch(error => console.log("Error al reproducir audio:", error));
+            }
+        }
 
-    // Escuchar eventos para pausar el audio
-    ['keyup', 'handlemouseup'].forEach(eventType => {
-        window.addEventListener(eventType, pauseAudio);
-    })
+        // Pausar el audio
+        function pauseAudio() {
+            if (!audio.paused) {
+                audio.pause();
+            }
+        }
 
-};
+        // Escuchar eventos para reproducir el audio
+        ['keydown', 'click'].forEach(eventType => {
+            window.addEventListener(eventType, playAudio);
+        });
 
-p.onKeyDown = function(e) {
-    console.log("Key Down:", e.which);
-	BasePiece.prototype.onKeyDown.call(this, e);
-    var keycode = e.which;
-    
-    // Movimiento izquierda/derecha
-    if (keycode == 37) this.turndir = -1; // Flecha izquierda
-    if (keycode == 39) this.turndir = 1;  // Flecha derecha
-    
-    // Aceleración hacia adelante/atrás
-    if (keycode == 38) this.acceleration = 1;  // Flecha arriba
-    if (keycode == 40) this.acceleration = -1; // Flecha abajo
-}
+        // Escuchar eventos para pausar el audio
+        ['keyup', 'mouseup'].forEach(eventType => {
+            window.addEventListener(eventType, pauseAudio);
+        });
+    };
+
+    // Manejar el evento de presionar una tecla
+    p.onKeyDown = function(e) {
+        console.log("Key Down:", e.which);
+        BasePiece.prototype.onKeyDown?.call(this, e);
+        var keycode = e.which;
+
+        // Movimiento izquierda/derecha
+        if (keycode == 37) this.turndir = -1; // Flecha izquierda
+        if (keycode == 39) this.turndir = 1;  // Flecha derecha
+
+        // Aceleración hacia adelante/atrás
+        if (keycode == 38) this.acceleration = 1;  // Flecha arriba
+        if (keycode == 40) this.acceleration = -1; // Flecha abajo
+    }
+
+    // Manejar el evento de soltar una tecla
+    p.onKeyUp = function(e) {
+        console.log("Key Up:", e.which);
+        BasePiece.prototype.onKeyUp?.call(this, e);
+
+        var keycode = e.which;
+        if (keycode == 37 || keycode == 39) this.turndir = 0;
+        if (keycode == 38 || keycode == 40) this.acceleration = 0;
+
+        // Comandos de depuración adicionales
+        var c = String.fromCharCode(e.which);
+        if (c === "R") this.reset();
+        else if (c === "C") this.colorOvals = this.colorOvals === "#000" ? "#00F" : "#000";
+    };
+
+    /*********************************
+     *          INTERACTION
+     ********************************/
+    p.initInteraction = function() {
+        this.stage.addEventListener("stagemousedown", this.handleMouseDown.bind(this));
+        this.stage.addEventListener("stagemousemove", this.handleMouseMove.bind(this));
+        this.stage.addEventListener("stagemouseup", this.handleMouseUp.bind(this));
+    }
+
+    p.handleMouseDown = function(e) {
+        if (this.pointerID) return;
+        this.pointerID = e.pointerID;
+        this.mouseIsDown = true;
+        this.startX = this.mouseX = e.stageX;
+    }
+
+    p.handleMouseMove = function(e) {
+        if (e.pointerID != this.pointerID) return;
+        this.mouseX = e.stageX;
+    }
+
+    p.handleMouseUp = function(e) {
+        if (e.pointerID != this.pointerID) return;
+        this.pointerID = null;
+        this.mouseIsDown = false;
+        this.acceleration = 0;
+        this.turndir = 0;
+    }
 
 
-p.onKeyUp = function(e) {
-    console.log("Key Up:", e.which);
-    BasePiece.prototype.onKeyUp.call(this, e);
-
-    var keycode = e.which;
-    if (keycode == 37 || keycode == 39) this.turndir = 0;
-    if (keycode == 38 || keycode == 40) this.acceleration = 0;
-
-    // Comandos de depuración adicionales EXTRA
-    var c = String.fromCharCode(e.which);
-    if (c == "R") this.reset();
-    else if (c == "C") this.colorOvals = this.colorOvals == "#000" ? "#00F" : "#000";
-};
-
-		
-	
-	/*********************************
-	 *		    INTERACTION
-	 ********************************/
-	
-	p.initInteraction = function()
-	{
-		this.stage.addEventListener("stagemousedown", this.handleMouseDown.bind(this));
-		this.stage.addEventListener("stagemousemove", this.handleMouseMove.bind(this));
-		this.stage.addEventListener("stagemouseup", this.handleMouseUp.bind(this));
-	}
-	p.handleMouseDown = function(e)
-	{
-		if (this.pointerID) return;
-		this.pointerID = e.pointerID;
-		this.mouseIsDown = true;
-		this.startX = this.mouseX = e.stageX;
-	}
-	p.handleMouseMove = function(e)
-	{
-		if (e.pointerID!=this.pointerID) return;
-		this.mouseX = e.stageX;
-	}
-	p.handleMouseUp = function(e)
-	{
-		if (e.pointerID!=this.pointerID) return;
-		this.pointerID = null;
-		this.mouseIsDown = false;
-		this.acceleration = 0;
-		this.turndir = 0;
-	}
 	
 
 	 

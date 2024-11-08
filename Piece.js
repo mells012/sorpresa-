@@ -32,9 +32,8 @@ p.startAudioAndText = function() {
     ['keydown', 'mousemove', 'click'].forEach(eventType => {
         window.addEventListener(eventType, () => {
             playAudio();
-            if (typeof startTextSequence === 'function') {
-                startTextSequence();
-            }
+            startTextSequence();
+            
         })
     })
 }

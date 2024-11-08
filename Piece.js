@@ -9,35 +9,40 @@
 		var audio = new Audio('heystephen1.wav');
 	//
 	
-	p.initialize = function(canvas, config)
-	{
-    		BasePiece.prototype.initialize.call(this, canvas, config);
-    		this.initInteraction();
-    		window.onkeydown = this.onKeyDown.bind(this);
+	p.initialize = function(canvas, config) {
+    BasePiece.prototype.initialize.call(this, canvas, config);
+    this.initInteraction();
+    window.onkeydown = this.onKeyDown.bind(this);
+    window.onkeyup = this.onKeyUp.bind(this); // Asegúrate de que `onKeyUp` esté enlazado
 
-    	// Activa la secuencia de texto y prepara el audio solo en modo de depuración
-    	//if (config.debug) {
-        //	startTextSequence(); // Inicia la secuencia de texto
+    // Inicia la secuencia de texto y audio solo si el modo de depuración está activado
+    if (config.debug) {
+        this.startAudioAndText();
+    }
+}
 
-        // Función para reproducir el audio solo después de la primera interacción
-        //function playAudioOnInteraction() {
-          //  audio.play().catch(error => console.log("Error al reproducir audio:", error));
-            // Elimina los event listeners después de la primera reproducción
-            //window.removeEventListener('click', playAudioOnInteraction);
-            //window.removeEventListener('keydown', playAudioOnInteraction);
-       // }
+// Nueva función para iniciar audio y secuencia de texto
+p.startAudioAndText = function() {
+    // Reproducir audio solo una vez cuando haya interacción del usuario
+    function playAudioOnInteraction() {
+        audio.play().catch(error => console.log("Error al reproducir audio:", error));
+        window.removeEventListener('click', playAudioOnInteraction);
+        window.removeEventListener('keydown', playAudioOnInteraction);
+    }
 
-        // Agrega event listeners para activar el audio con la primera interacción
-        // window.addEventListener('click', playAudioOnInteraction);
-       // window.addEventListener('keydown', playAudioOnInteraction);
-    	//	}
-	}
+    // Escuchar el primer evento de clic o tecla para reproducir el audio
+    window.addEventListener('click', playAudioOnInteraction);
+    window.addEventListener('keydown', playAudioOnInteraction);
+
+    // Inicia la secuencia de texto
+    startTextSequence();
+};
+
 
 
 	p.onKeyDown = function(e)
 	{
 		console.log("Key Down:", e.which);
-		config.debug = false; 
 		var keycode = e.which;
 		//left right
 		if (keycode == 37) this.turndir = -1; 
@@ -49,36 +54,26 @@
 		
 	}
 
-// Modifica la función `onKeyUp` para controlar la reproducción del audio
 p.onKeyUp = function(e) {
-
-	
-	console.log("Key Up:", e.which);
-	config.debug = true; 
+    console.log("Key Up:", e.which);
     BasePiece.prototype.onKeyUp.call(this, e);
     var keycode = e.which;
     if (keycode == 37 || keycode == 39) this.turndir = 0;
     if (keycode == 38 || keycode == 40) this.acceleration = 0;
 
-    // Comando para controlar el audio según `this.config.debug`
+    // Controla el audio y la secuencia de texto según el estado de depuración
     if (config.debug) {
-        // Si `debug` es true, reproduce el audio
-	    startTextSequence(); // Inicia la secuencia de texto
         if (audio.paused) {
             audio.play();
         }
+        startTextSequence(); // Inicia la secuencia de texto
     } else {
-        // Si `debug` es false, pausa el audio
         if (!audio.paused) {
             audio.pause();
         }
     }
-
-    // Comandos de depuración adicionales
-    var c = String.fromCharCode(e.which);
-    if (c == "R") this.reset();
-    else if (c == "C") this.colorOvals = this.colorOvals == "#000" ? "#00F" : "#000";
 };
+
 		
 	
 	/*********************************

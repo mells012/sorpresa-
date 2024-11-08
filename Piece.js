@@ -29,7 +29,7 @@
         this.startAudioAndText(); // Iniciar el audio y la secuencia de texto
     }
 
-	 /*********************************
+/*********************************
      *    SECUENCIA DE TEXTO
      *********************************/
     p.initTextSequence = function() {
@@ -57,7 +57,8 @@
         console.log("Secuencia de texto iniciada");
     }
 
-    p.pauseTextSequence = function() {
+
+p.pauseTextSequence = function() {
         if (timer) clearInterval(timer);
         isPlaying = false;
         console.log("Secuencia de texto pausada");
@@ -86,7 +87,8 @@
      *    AUDIO
      *********************************/
     p.startAudioAndText = function() {
-    const playAudio = () => {
+
+	    const playAudio = () => {
         if (audio.paused) {
             audio.play().catch(err => console.log("Error al reproducir audio:", err));
         }
@@ -110,22 +112,22 @@
         });
     });
 
-    // Escuchar eventos para pausar la secuencia de texto y audio
+   // Escuchar eventos para pausar la secuencia de texto y audio
     ['keyup', 'mouseup', 'touchend'].forEach(eventType => {
         window.addEventListener(eventType, (event) => {
             if (eventType === 'keyup') keysPressed.delete(event.key);
             if (eventType === 'mouseup' || eventType === 'touchend') mouseDown = false;
 
-            if (keysPressed.size === 0 && !mouseDown) {
+if (keysPressed.size === 0 && !mouseDown) {
                 this.pauseTextSequence();
                 pauseAudio();
             }
         });
-    });
+
+ });
 };
 
-
-    // Manejar el evento de presionar una tecla
+ // Manejar el evento de presionar una tecla
     p.onKeyDown = function(e) {
         console.log("Key Down:", e.which);
         BasePiece.prototype.onKeyDown?.call(this, e);
@@ -156,6 +158,8 @@
     }
 
     window.Piece = Piece;
+
+ window.Piece = Piece;
 	
     /*********************************
      *          INTERACTION
@@ -188,7 +192,7 @@
         this.turndir = 0;
     }
 
-	// Manejar el evento de tocar la pantalla
+ // Manejar el evento de tocar la pantalla
 p.handletouchstart = function(e) {
     e.preventDefault(); // Prevenir el comportamiento predeterminado
     this.touchActive = true;
@@ -220,11 +224,7 @@ p.handletouchend = function(e) {
     }
 };
 
-
-	
-
-	 
-	/*********************************
+ /*********************************
 	 *			    FLOW
 	 ********************************/
 	
@@ -258,7 +258,8 @@ p.handletouchend = function(e) {
 		this.initOvals();
 		this.initStars();
     //
-		if (this.width) this.reset();
+
+	if (this.width) this.reset();
 	}
 	
 	p.reset = function()
@@ -288,7 +289,8 @@ p.handletouchend = function(e) {
 			this.ovals[j].draw(g.s(this.colorOvals));
 			this.ovals[j].step(df);
 		}
-		//
+
+	//
 		if (this.mouseIsDown)
 		{
 			this.acceleration = 1;
@@ -315,8 +317,8 @@ p.handletouchend = function(e) {
 		//
 		return true;
 	}	
-		
-	// DRIVING
+
+ // DRIVING
 
 	p.turn = function(dir) 
 {
@@ -347,7 +349,7 @@ function updateCarRotation(dir) {
         // Calcula el ángulo objetivo basado en `dir`
         var targetAngle = dir * 0.5; // Ajusta el valor `15` para controlar la inclinación máxima
 
-        // Gradualmente ajusta el `currentAngle` hacia el `targetAngle`
+         // Gradualmente ajusta el `currentAngle` hacia el `targetAngle`
         currentAngle += (targetAngle - currentAngle) * 0.1; // Ajusta `0.1` para la velocidad de suavizado
 
         // Aplica la transformación al elemento del auto
@@ -357,26 +359,7 @@ function updateCarRotation(dir) {
 
 }
 
-	// Ajustar el tamaño del auto para pantallas pequeñas
-function adjustCarSize() {
-    const carImage = document.getElementById('carImage');
-    if (window.innerWidth <= 768) { // Si la pantalla es menor o igual a 768px
-        carImage.style.width = '300px';
-        carImage.style.height = 'auto';
-        carImage.style.bottom = '-30%';
-    } else {
-        carImage.style.width = '470px'; // Tamaño original
-        carImage.style.height = '60vh';
-        carImage.style.bottom = '-45%';
-    }
-} 
-
-window.addEventListener('resize', adjustCarSize);
-adjustCarSize(); // Llamar una vez al cargar la página
-
-
-
-	p.accelerate = function(dir) 
+ p.accelerate = function(dir) 
 	{
 		var cfg = this.config;
 		if (dir == 0) {
@@ -389,7 +372,7 @@ adjustCarSize(); // Llamar una vez al cargar la página
 		this.road.rotation = this.curve * this.speed * cfg.maxtilt;
 	}
 
-	//TREMBLING
+ //TREMBLING
 	
 	p.tril = function(a) {
     if (this.speed > 0.1) { // Solo temblar si la velocidad es mayor a 0.1
@@ -403,20 +386,7 @@ adjustCarSize(); // Llamar una vez al cargar la página
     }
 };
 
-p.trilHor = function(a) {
-    if (this.speed > 0.1) { // Solo temblar si la velocidad es mayor a 0.1
-        if (this.road.x > this.road.xOrig) {
-            this.road.x = this.road.xOrig - a * 0.5;
-        } else {
-            this.road.x = this.road.xOrig + a * 0.5;
-        }
-    } else {
-        this.road.x = this.road.xOrig; // Asegura que se mantenga en posición cuando esté en reposo
-    }
-};
-
-
-	//STARS
+ //STARS
 	
 	p.initStars = function()
 	{
@@ -436,8 +406,8 @@ p.trilHor = function(a) {
 		if (s0.x > 0) s1.x = s0.x - w;
 		else s1.x = s0.x + w;
 	}
-	
-	// OVALS
+
+ // OVALS
 	
 	p.initOvals = function()
 	{
@@ -462,8 +432,7 @@ p.trilHor = function(a) {
 
 	window.Piece = Piece;
 
-
-	var OvalTween = function(mid, small, big, thick, thin, fract, ease) 
+var OvalTween = function(mid, small, big, thick, thin, fract, ease) 
 	{
 		this.fract = fract;
 		this.pos = mid;
@@ -493,7 +462,7 @@ p.trilHor = function(a) {
 		else if (this.fract>1) this.fract -= 1;
 	}
 
-	function bias(p, factor) {
+ function bias(p, factor) {
 		//ease in of uit: factor tussen -100..100
 		//p tussen 0..1
 		var sign = factor/Math.abs(factor);

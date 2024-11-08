@@ -20,20 +20,30 @@
 }
 
 	p.startAudioAndText = function() {
-    // Reproducir el audio en cada interacción del usuario
+   // Función para reproducir el audio
     function playAudio() {
         if (audio.paused) {
             audio.play().catch(error => console.log("Error al reproducir audio:", error));
         }
     }
 
-    // Escuchar múltiples eventos para reproducir el audio y mostrar el texto
+    // Función para pausar el audio
+    function pauseAudio() {
+        if (!audio.paused) {
+            audio.pause();
+        }
+    }
+
+    // Escuchar eventos para reproducir el audio
     ['keydown', 'click'].forEach(eventType => {
-        window.addEventListener(eventType, () => {
-            playAudio();
-                       
-        })
+        window.addEventListener(eventType, playAudio);
     })
+
+    // Escuchar eventos para pausar el audio
+    ['keyup', 'mouseup'].forEach(eventType => {
+        window.addEventListener(eventType, pauseAudio);
+    })
+
 }
 
 p.onKeyDown = function(e) {

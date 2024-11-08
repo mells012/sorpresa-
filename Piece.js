@@ -40,38 +40,46 @@ p.startAudioAndText = function() {
 
 
 
-	p.onKeyDown = function(e)
-	{
-		console.log("Key Down:", e.which);
-		var keycode = e.which;
-		//left right
-		if (keycode == 37) this.turndir = -1; 
-		if (keycode == 39) this.turndir = 1;
-		//up down
-		if (keycode == 38) this.acceleration = 1;
-		if (keycode == 40) this.acceleration = -1;
+p.onKeyDown = function(e) {
+    console.log("Key Down:", e.which);
+    var keycode = e.which;
+    
+    // Movimiento izquierda/derecha
+    if (keycode == 37) this.turndir = -1; // Flecha izquierda
+    if (keycode == 39) this.turndir = 1;  // Flecha derecha
+    
+    // Aceleración hacia adelante/atrás
+    if (keycode == 38) this.acceleration = 1;  // Flecha arriba
+    if (keycode == 40) this.acceleration = -1; // Flecha abajo
+}
 
-		
-	}
 
 p.onKeyUp = function(e) {
     console.log("Key Up:", e.which);
     BasePiece.prototype.onKeyUp.call(this, e);
+
     var keycode = e.which;
     if (keycode == 37 || keycode == 39) this.turndir = 0;
     if (keycode == 38 || keycode == 40) this.acceleration = 0;
 
-    // Controla el audio y la secuencia de texto según el estado de depuración
-    if (config.debug) {
+    // Asegúrate de usar `this.config` en lugar de `config`
+    if (this.config.debug) {
+        // Si `debug` es true, reproduce el audio y muestra el texto
         if (audio.paused) {
             audio.play();
         }
         startTextSequence(); // Inicia la secuencia de texto
     } else {
+        // Si `debug` es false, pausa el audio
         if (!audio.paused) {
             audio.pause();
         }
     }
+
+    // Comandos de depuración adicionales
+    var c = String.fromCharCode(e.which);
+    if (c == "R") this.reset();
+    else if (c == "C") this.colorOvals = this.colorOvals == "#000" ? "#00F" : "#000";
 };
 
 		

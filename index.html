@@ -172,7 +172,7 @@
 
     // Función para mostrar la siguiente línea de texto
     function showNextLine() {
-      if (!isActive) return;
+      if (textLines.length === 0) return;
 
       textLines[currentIndex].style.display = 'none'; // Oculta la línea actual
       currentIndex = (currentIndex) % totalLines; // Avanza al siguiente índice

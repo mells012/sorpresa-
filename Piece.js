@@ -19,22 +19,23 @@
 }
 
 
+
 p.startAudioAndText = function() {
-    // Reproducir el audio en cada interacción del usuario
+    // Reproducir el audio cada vez que haya interacción del usuario
     function playAudio() {
+        // Si el audio está pausado, reinicia y reproduce desde el principio
         if (audio.paused) {
-            audio.currentTime = 0; // Reinicia el audio al principio si está pausado
             audio.play().catch(error => console.log("Error al reproducir audio:", error));
         }
     }
 
-    // Escuchar múltiples eventos para reproducir el audio
+    // Escuchar eventos para reproducir el audio y activar la secuencia de texto
     ['keydown', 'mousemove', 'click'].forEach(eventType => {
-        window.addEventListener(eventType, playAudio);
+        window.addEventListener(eventType, () => {
+            playAudio();
+            startTextSequence(); // Inicia la secuencia de texto si no está corriendo
+        })
     })
-
-    // Inicia la secuencia de texto una vez y la mantiene corriendo
-    startTextSequence();
 }
 
 

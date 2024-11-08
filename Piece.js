@@ -22,6 +22,8 @@
         window.onkeydown = this.onKeyDown.bind(this);
         window.onkeyup = this.onKeyUp.bind(this);
         window.onmouseup = this.handleMouseUp.bind(this);
+	window.ontouchstart = this.handletouchstart.bind(this);	
+	window.ontouchend = this.handletouchend.bind(this);	
         
         this.initTextSequence(); // Iniciar la secuencia de texto
         this.startAudioAndText(); // Iniciar el audio y la secuencia de texto
@@ -84,37 +86,44 @@
      *    AUDIO
      *********************************/
     p.startAudioAndText = function() {
-        const playAudio = () => {
-            if (audio.paused) audio.play().catch(err => console.log("Error al reproducir audio:", err));
-        };
-        const pauseAudio = () => {
-            if (!audio.paused) audio.pause();
-        };
+    const playAudio = () => {
+        if (audio.paused) {
+            audio.play().catch(err => console.log("Error al reproducir audio:", err));
+        }
+    };
+    const pauseAudio = () => {
+        if (!audio.paused) {
+            audio.pause();
+        }
+    };
 
-        ['keydown', 'mousedown'].forEach(eventType => {
-            window.addEventListener(eventType, (event) => {
-                if (!isPlaying && !window.debugging) {
-                    this.startTextSequence();
-                    this.resetActivityTimer();
-                }
-                if (eventType === 'keydown') keysPressed.add(event.key);
-                if (eventType === 'mousedown') mouseDown = true;
-                playAudio();
-            });
+    // Escuchar eventos para iniciar la secuencia de texto y audio
+    ['keydown', 'mousedown', 'touchstart'].forEach(eventType => {
+        window.addEventListener(eventType, (event) => {
+            if (!isPlaying && !window.debugging) {
+                this.startTextSequence();
+                this.resetActivityTimer();
+            }
+            if (eventType === 'keydown') keysPressed.add(event.key);
+            if (eventType === 'mousedown' || eventType === 'touchstart') mouseDown = true;
+            playAudio();
         });
+    });
 
-        ['keyup', 'mouseup'].forEach(eventType => {
-            window.addEventListener(eventType, (event) => {
-                if (eventType === 'keyup') keysPressed.delete(event.key);
-                if (eventType === 'mouseup') mouseDown = false;
+    // Escuchar eventos para pausar la secuencia de texto y audio
+    ['keyup', 'mouseup', 'touchend'].forEach(eventType => {
+        window.addEventListener(eventType, (event) => {
+            if (eventType === 'keyup') keysPressed.delete(event.key);
+            if (eventType === 'mouseup' || eventType === 'touchend') mouseDown = false;
 
-                if (keysPressed.size === 0 && !mouseDown) {
-                    this.pauseTextSequence();
-                    pauseAudio();
-                }
-            });
+            if (keysPressed.size === 0 && !mouseDown) {
+                this.pauseTextSequence();
+                pauseAudio();
+            }
         });
-    }
+    });
+};
+
 
     // Manejar el evento de presionar una tecla
     p.onKeyDown = function(e) {
@@ -155,6 +164,8 @@
         this.stage.addEventListener("stagemousedown", this.handleMouseDown.bind(this));
         this.stage.addEventListener("stagemousemove", this.handleMouseMove.bind(this));
         this.stage.addEventListener("stagemouseup", this.handleMouseUp.bind(this));
+	this.stage.addEventListener("stagetouchstart", this.handletouchstart.bind(this));
+	this.stage.addEventListener("stagetouchend", this.handletouchend.bind(this));
     }
 
     p.handleMouseDown = function(e) {
@@ -176,6 +187,38 @@
         this.acceleration = 0;
         this.turndir = 0;
     }
+
+	// Manejar el evento de tocar la pantalla
+p.handletouchstart = function(e) {
+    e.preventDefault(); // Prevenir el comportamiento predeterminado
+    this.touchActive = true;
+    console.log("Pantalla tocada");
+
+    if (!isPlaying && !window.debugging) {
+        this.startTextSequence();
+        this.resetActivityTimer();
+    }
+    
+    // Reproducir el audio si no está ya reproduciéndose
+    if (audio.paused) {
+        audio.play().catch(err => console.log("Error al reproducir audio:", err));
+    }
+};
+
+// Manejar el evento de dejar de tocar la pantalla
+p.handletouchend = function(e) {
+    e.preventDefault(); // Prevenir el comportamiento predeterminado
+    this.touchActive = false;
+    console.log("Pantalla liberada");
+
+    if (isPlaying) {
+        this.pauseTextSequence();
+    }
+    
+    if (!audio.paused) {
+        audio.pause();
+    }
+};
 
 
 	

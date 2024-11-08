@@ -28,7 +28,7 @@
     }
 
     // Escuchar múltiples eventos para reproducir el audio y mostrar el texto
-    ['keydown', 'mousemove', 'click'].forEach(eventType => {
+    ['keydown', 'click'].forEach(eventType => {
         window.addEventListener(eventType, () => {
             playAudio();
                        
@@ -86,7 +86,6 @@ p.onKeyUp = function(e) {
 	}
 	p.handleMouseMove = function(e)
 	{
-		console.log("MouseMove:", e.which);
 		if (e.pointerID!=this.pointerID) return;
 		this.mouseX = e.stageX;
 	}

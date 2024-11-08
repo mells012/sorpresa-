@@ -116,15 +116,34 @@
         });
     }
 
-    // Manejar teclas
+    // Manejar el evento de presionar una tecla
     p.onKeyDown = function(e) {
         console.log("Key Down:", e.which);
         BasePiece.prototype.onKeyDown?.call(this, e);
+        var keycode = e.which;
+
+        // Movimiento izquierda/derecha
+        if (keycode == 37) this.turndir = -1; // Flecha izquierda
+        if (keycode == 39) this.turndir = 1;  // Flecha derecha
+
+        // Aceleración hacia adelante/atrás
+        if (keycode == 38) this.acceleration = 1;  // Flecha arriba
+        if (keycode == 40) this.acceleration = -1; // Flecha abajo
     }
 
+    // Manejar el evento de soltar una tecla
     p.onKeyUp = function(e) {
         console.log("Key Up:", e.which);
         BasePiece.prototype.onKeyUp?.call(this, e);
+
+        var keycode = e.which;
+        if (keycode == 37 || keycode == 39) this.turndir = 0;
+        if (keycode == 38 || keycode == 40) this.acceleration = 0;
+
+        // Comandos de depuración adicionales
+        var c = String.fromCharCode(e.which);
+        if (c === "R") this.reset();
+        else if (c === "C") this.colorOvals = this.colorOvals === "#000" ? "#00F" : "#000";
     }
 
     window.Piece = Piece;

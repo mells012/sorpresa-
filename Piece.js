@@ -23,7 +23,7 @@
 p.startAudioAndText = function() {
     // Reproducir el audio cada vez que haya interacción del usuario
     function playAudio() {
-        // Si el audio está pausado, reinicia y reproduce desde el principio
+        // Si el audio está pausado y reproduce 
         if (audio.paused) {
             audio.play().catch(error => console.log("Error al reproducir audio:", error));
         }

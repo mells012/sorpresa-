@@ -2,17 +2,15 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
   <title>Canvas Animation</title>
 
   <!-- Scripts externos -->
-  <script type="text/javascript" src="libs.min.js"></script>
-  <script type="text/javascript" src="assets.js"></script>
-  <script type="text/javascript" src="Util.js"></script>
-  <script type="text/javascript" src="Config.js"></script>
-  <script type="text/javascript" src="Piece.js"></script>
- 
+  <script src="libs.min.js"></script>
+  <script src="assets.js"></script>
+  <script src="Util.js"></script>
+  <script src="Config.js"></script>
+  <script src="Piece.js"></script>
 
   <!-- Estilos -->
   <style>
@@ -23,11 +21,11 @@
     }
     #output {
       color: white;
-      z-index: 1;
       position: absolute;
       left: 10px;
       top: 10px;
       font-size: 10px;
+      z-index: 1;
     }
     #myCanvas {
       position: absolute;
@@ -37,7 +35,6 @@
       width: 100vw;
       height: 100vh;
     }
-    
     #carImage {
       position: absolute;
       z-index: 3;
@@ -49,8 +46,6 @@
       pointer-events: none;
       transition: transform 0.1s;
     }
-
-    /* Estilos para las líneas de texto secuenciales */
     .text-sequence {
       position: absolute;
       top: 20%;
@@ -61,25 +56,20 @@
       font-size: 1.5em;
       z-index: 4;
     }
-
     .text-line {
-      display: none; /* Oculta todas las líneas inicialmente */
+      display: none;
     }
   </style>
 </head>
 
 <body onload="init('myCanvas', Piece, Config);">
-
   <!-- Canvas para animaciones -->
   <canvas id="myCanvas" width="300" height="1530"></canvas>
 
   <!-- Imagen del auto -->
   <img id="carImage" src="Aston_Martin_Valkyrie.png" alt="Aston Martin Valkyrie" />
 
-  <!-- Div para mostrar información adicional -->
-  <div id="output">.</div>
-
-  <!-- Contenedor para la secuencia de líneas de texto -->
+    <!-- Contenedor para la secuencia de líneas de texto -->
   <!-- _____________________________LETRA____________________________________  -->
   <div class="text-sequence" id="textSequence">
     <div class="text-line">                </div>
@@ -156,106 +146,5 @@
     <div class="text-line">Mmm-mm, mm-mm</div>
     <div class="text-line">Mmm-mm, mm-mm</div>
     <div class="text-line">Mmm-mm...</div>
-
-    
-    <!-- Añade más líneas si es necesario -->
-  </div>
-
-<!-- Script para controlar la secuencia de texto -->
-  <script>
-document.addEventListener('DOMContentLoaded', function() {
-  const duration = 4137.76; // Duración en milisegundos (~517.24 ms)
-  let currentIndex = 0;
-  let timer;
-  let isActive = true;
-  let isPlaying = false; // Controla si la secuencia está en ejecución
-  let keysPressed = new Set(); // Controla las teclas actualmente presionadas
-  let mouseDown = false; // Controla si el mouse está presionado
-
-  const textLines = document.querySelectorAll('.text-line');
-  const totalLines = textLines.length;
-
-  function showNextLine() {
-    if (textLines.length === 0) return;
-    textLines[currentIndex].style.display = 'none';
-    currentIndex = (currentIndex + 1) % totalLines;
-    textLines[currentIndex].style.display = 'block';
-  }
-
-  function startTextSequence() {
-    if (isPlaying || window.debugging) return;
-    if (timer) clearInterval(timer);
-    showNextLine();
-    timer = setInterval(showNextLine, duration);
-    isPlaying = true;
-    console.log("Secuencia iniciada");
-  }
-
-  function pauseTextSequence() {
-    if (timer) {
-      clearInterval(timer);
-      timer = null;
-    }
-    if (isPlaying) {
-      isPlaying = false;
-      console.log("Secuencia pausada");
-    }
-  }
-
-  function resetActivityTimer() {
-    isActive = true;
-    clearTimeout(activityTimeout);
-    activityTimeout = setTimeout(() => {
-      if (keysPressed.size === 0 && !mouseDown) { // Solo pausar si no hay actividad
-        isActive = false;
-        pauseTextSequence();
-      }
-    }, 5000);
-  }
-
-  let activityTimeout = setTimeout(() => {
-    if (keysPressed.size === 0 && !mouseDown) {
-      isActive = false;
-      pauseTextSequence();
-    }
-  }, 5000);
-
-  // Escuchar eventos para iniciar la secuencia solo si no está en depuración y no está ya reproduciéndose
-  ['keydown', 'mousedown'].forEach(eventType => {
-    window.addEventListener(eventType, (event) => {
-      if (!isPlaying && !window.debugging) {
-        startTextSequence();
-        resetActivityTimer();
-      }
-      if (eventType === 'keydown') {
-        keysPressed.add(event.key);
-      }
-      if (eventType === 'mousedown') {
-        mouseDown = true;
-      }
-    });
-  });
-
-  // Escuchar eventos para pausar la secuencia
-  ['keyup', 'mouseup'].forEach(eventType => {
-    window.addEventListener(eventType, (event) => {
-      if (eventType === 'keyup') {
-        keysPressed.delete(event.key);
-      }
-      if (eventType === 'mouseup') {
-        mouseDown = false;
-      }
-
-      if (keysPressed.size === 0 && !mouseDown) {
-        pauseTextSequence();
-      }
-    });
-  });
-});
-</script>
-
-
-<!-- __________________________________________________________________________-->
-  
 </body>
 </html>

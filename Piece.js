@@ -38,6 +38,7 @@
 
 p.onKeyDown = function(e) {
     console.log("Key Down:", e.which);
+	BasePiece.prototype.onKeyDown.call(this, e);
     var keycode = e.which;
     
     // Movimiento izquierda/derecha

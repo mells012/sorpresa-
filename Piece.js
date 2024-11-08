@@ -369,7 +369,7 @@ function adjustCarSize() {
         carImage.style.height = '60vh';
         carImage.style.bottom = '-45%';
     }
-}
+} 
 
 window.addEventListener('resize', adjustCarSize);
 adjustCarSize(); // Llamar una vez al cargar la página

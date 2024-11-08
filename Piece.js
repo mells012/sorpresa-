@@ -13,6 +13,7 @@
     BasePiece.prototype.initialize.call(this, canvas, config);
     this.initInteraction();
     window.onkeydown = this.onKeyDown.bind(this);
+	window.onkeyup = this.onKeyUp.bind(this);
     
     // Iniciar audio y secuencia de texto al cargar
     this.startAudioAndText();

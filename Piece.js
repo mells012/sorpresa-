@@ -23,7 +23,7 @@ p.startAudioAndText = function() {
     // Reproducir el audio en cada interacción del usuario
     function playAudio() {
         if (audio.paused) {
-            audio.currentTime = 0; // Reinicia el audio al principio
+            
             audio.play().catch(error => console.log("Error al reproducir audio:", error));
         }
     }

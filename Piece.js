@@ -4,10 +4,17 @@
     }
  
     var p = Piece.prototype = new BasePiece();
+	var audio = new Audio('heystephen1.wav'); // Audio para la canción
+    var textLines; // Elementos de texto para la secuencia
+    var currentIndex = 0;
+    var timer;
+    var duration = 4137.76; // Tiempo de aparición en milisegundos
+    var isActive = true;
+    var isPlaying = false;
+    var keysPressed = new Set();
+    var mouseDown = false;
 
-    // Crear un objeto de audio para el archivo "heystephen1.wav"
-    var audio = new Audio('heystephen1.wav');
-
+	
     // Inicializar el objeto
     p.initialize = function(canvas, config) {
         BasePiece.prototype.initialize.call(this, canvas, config);
@@ -15,68 +22,113 @@
         window.onkeydown = this.onKeyDown.bind(this);
         window.onkeyup = this.onKeyUp.bind(this);
         window.onmouseup = this.handleMouseUp.bind(this);
-
-        // Iniciar audio y secuencia de texto al cargar
-        this.startAudioAndText();
+        
+        this.initTextSequence(); // Iniciar la secuencia de texto
+        this.startAudioAndText(); // Iniciar el audio y la secuencia de texto
     }
 
-    // Función para reproducir y pausar audio basado en eventos
+	 /*********************************
+     *    SECUENCIA DE TEXTO
+     *********************************/
+    p.initTextSequence = function() {
+        textLines = document.querySelectorAll('.text-line');
+    }
+
+    p.showNextLine = function() {
+        if (!textLines || textLines.length === 0) return;
+
+        // Oculta la línea actual
+        textLines[currentIndex].style.display = 'none';
+
+        // Avanza al siguiente índice y muestra la nueva línea
+        currentIndex = (currentIndex + 1) % textLines.length;
+        textLines[currentIndex].style.display = 'block';
+    }
+
+    p.startTextSequence = function() {
+        if (isPlaying || window.debugging) return; // No iniciar si ya está reproduciéndose o en depuración
+
+        if (timer) clearInterval(timer);
+        this.showNextLine();
+        timer = setInterval(this.showNextLine.bind(this), duration);
+        isPlaying = true;
+        console.log("Secuencia de texto iniciada");
+    }
+
+    p.pauseTextSequence = function() {
+        if (timer) clearInterval(timer);
+        isPlaying = false;
+        console.log("Secuencia de texto pausada");
+    }
+
+    p.resetActivityTimer = function() {
+        isActive = true;
+        clearTimeout(this.activityTimeout);
+        this.activityTimeout = setTimeout(() => {
+            if (keysPressed.size === 0 && !mouseDown) {
+                isActive = false;
+                this.pauseTextSequence();
+            }
+        }, 5000);
+    }
+
+    // Pausar por inactividad al inicio
+    p.activityTimeout = setTimeout(() => {
+        if (keysPressed.size === 0 && !mouseDown) {
+            isActive = false;
+            p.pauseTextSequence();
+        }
+    }, 5000);
+
+/*********************************
+     *    AUDIO
+     *********************************/
     p.startAudioAndText = function() {
-        // Reproducir el audio
-        function playAudio() {
-            if (audio.paused) {
-                audio.play().catch(error => console.log("Error al reproducir audio:", error));
-            }
-        }
+        const playAudio = () => {
+            if (audio.paused) audio.play().catch(err => console.log("Error al reproducir audio:", err));
+        };
+        const pauseAudio = () => {
+            if (!audio.paused) audio.pause();
+        };
 
-        // Pausar el audio
-        function pauseAudio() {
-            if (!audio.paused) {
-                audio.pause();
-            }
-        }
-
-        // Escuchar eventos para reproducir el audio
         ['keydown', 'mousedown'].forEach(eventType => {
-            window.addEventListener(eventType, playAudio);
+            window.addEventListener(eventType, (event) => {
+                if (!isPlaying && !window.debugging) {
+                    this.startTextSequence();
+                    this.resetActivityTimer();
+                }
+                if (eventType === 'keydown') keysPressed.add(event.key);
+                if (eventType === 'mousedown') mouseDown = true;
+                playAudio();
+            });
         });
 
-        // Escuchar eventos para pausar el audio
         ['keyup', 'mouseup'].forEach(eventType => {
-            window.addEventListener(eventType, pauseAudio);
-        });
-    };
+            window.addEventListener(eventType, (event) => {
+                if (eventType === 'keyup') keysPressed.delete(event.key);
+                if (eventType === 'mouseup') mouseDown = false;
 
-    // Manejar el evento de presionar una tecla
+                if (keysPressed.size === 0 && !mouseDown) {
+                    this.pauseTextSequence();
+                    pauseAudio();
+                }
+            });
+        });
+    }
+
+    // Manejar teclas
     p.onKeyDown = function(e) {
         console.log("Key Down:", e.which);
         BasePiece.prototype.onKeyDown?.call(this, e);
-        var keycode = e.which;
-
-        // Movimiento izquierda/derecha
-        if (keycode == 37) this.turndir = -1; // Flecha izquierda
-        if (keycode == 39) this.turndir = 1;  // Flecha derecha
-
-        // Aceleración hacia adelante/atrás
-        if (keycode == 38) this.acceleration = 1;  // Flecha arriba
-        if (keycode == 40) this.acceleration = -1; // Flecha abajo
     }
 
-    // Manejar el evento de soltar una tecla
     p.onKeyUp = function(e) {
         console.log("Key Up:", e.which);
         BasePiece.prototype.onKeyUp?.call(this, e);
+    }
 
-        var keycode = e.which;
-        if (keycode == 37 || keycode == 39) this.turndir = 0;
-        if (keycode == 38 || keycode == 40) this.acceleration = 0;
-
-        // Comandos de depuración adicionales
-        var c = String.fromCharCode(e.which);
-        if (c === "R") this.reset();
-        else if (c === "C") this.colorOvals = this.colorOvals === "#000" ? "#00F" : "#000";
-    };
-
+    window.Piece = Piece;
+	
     /*********************************
      *          INTERACTION
      ********************************/

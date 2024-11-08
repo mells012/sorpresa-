@@ -86,6 +86,7 @@ p.onKeyUp = function(e) {
 	}
 	p.handleMouseMove = function(e)
 	{
+		console.log("MouseMove:", e.which);
 		if (e.pointerID!=this.pointerID) return;
 		this.mouseX = e.stageX;
 	}

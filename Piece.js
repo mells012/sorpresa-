@@ -21,22 +21,24 @@
 
 
 p.startAudioAndText = function() {
-    // Reproducir el audio cada vez que haya interacción del usuario
+    // Reproducir el audio en cada interacción del usuario
     function playAudio() {
-        // Si el audio está pausado y reproduce 
         if (audio.paused) {
             audio.play().catch(error => console.log("Error al reproducir audio:", error));
         }
     }
 
-    // Escuchar eventos para reproducir el audio y activar la secuencia de texto
+    // Escuchar múltiples eventos para reproducir el audio y mostrar el texto
     ['keydown', 'mousemove', 'click'].forEach(eventType => {
         window.addEventListener(eventType, () => {
             playAudio();
-            startTextSequence(); // Inicia la secuencia de texto si no está corriendo
+            if (typeof startTextSequence === 'function') {
+                startTextSequence();
+            }
         })
     })
 }
+
 
 
 

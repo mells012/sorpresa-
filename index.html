@@ -232,7 +232,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // Escuchar eventos para pausar la secuencia
   ['keyup', 'mouseup'].forEach(eventType => {
-    window.addEventListener(eventType, , () => {
+    window.addEventListener(eventType, () => {
     if (isPlaying && window.debugging) { // Verifica que no esté ya en ejecución ni en depuración
       textLines[currentIndex].style.display = 'none';
       pauseTextSequence();
